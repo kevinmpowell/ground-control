@@ -28,7 +28,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 # Background processes
-gem 'sidekiq'
+# gem 'sidekiq'
 
 # Send emails
 gem 'postmark-rails'
@@ -37,7 +37,7 @@ gem 'postmark-rails'
 gem 'sinatra', '>= 1.3.0', :require => nil
 
 # Performance Monitoring
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 
 gem "compass-rails"
 gem "font-awesome-rails"
