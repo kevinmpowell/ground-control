@@ -1,0 +1,701 @@
+$headings-color:white;
+$table-bg: white;
+$body-bg: #383838;
+
+@import "bootstrap";
+@import "bootstrap/theme";
+@import "font-awesome";
+@import "compass";
+
+$eightshapes-orange:#e76822;
+$planet-color: $eightshapes-orange;
+$planet-outline-color:darken($planet-color, 10%);
+
+$rocket-body-color:white;
+$rocket-contrast-color:darken($rocket-body-color, 30%);
+
+* {
+  @include box-sizing(border-box);
+}
+
+.word-break {
+  word-break:break-all;
+}
+
+body { 
+	padding-top: 70px; 
+  padding-bottom:40px;
+}
+
+label {
+	color:$headings-color;
+}
+
+.field_with_errors {
+	label {
+		&:before {
+			@extend .fa;
+			@extend .fa-warning;
+			padding-right:5px;
+		}
+	}
+
+	& + br {
+		display:none;
+	}
+}
+
+.help-block {
+	color:darken($headings-color, 20%);
+	font-style:italic;
+}
+
+.sign-in-form {
+	max-width:360px;
+	margin:0 auto;
+}
+
+.table {
+
+  thead tr {
+    display:none;
+  }
+
+  tr,
+  td {
+    display:block;
+    border-top-width:0;
+  }
+
+  & > tbody > tr > td {
+    border-top-width:0;
+  }
+
+  tr {
+    border-bottom:solid 2px $table-border-color;
+  }
+
+  td:before {
+    content:attr(data-label);
+    display:block;
+    font-weight:bold;
+  }
+}
+
+.nav > li > .github-user-menu {
+  padding-left:60px;
+  display:block;
+  position:relative;
+
+  .github-avatar {
+    @include border-radius(5px);
+    position:absolute;
+    height:40px;
+    left:10px;
+    top:5px;
+  }
+}
+
+// DEPLOYMENT SHOW.HTML.ERB
+.deployment-status-header {
+  line-height:1.5em;
+}
+
+// New deployment form
+.what-to-deploy {	
+	position:relative;
+
+	&:after {
+		content:'';
+		display:block;
+		padding-top:40%;
+	}
+
+	.rocket {
+		position:absolute;
+		width:50%;
+		max-width:240px;
+		right:70%;
+	}
+
+	.form-fields {
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		padding-left:35%;
+		position:relative;
+		z-index:200;
+	}
+}
+
+.where-to-deploy {
+  overflow:hidden;
+	position:relative;
+	padding-bottom:40px;
+  z-index:200;
+
+	.planet {
+		position:absolute;
+		left:70%;
+		max-width:200px;
+	}
+
+	.form-fields {
+		position:relative;
+		padding-right:20%;
+		z-index:10;
+	}
+}
+
+// CONFIRM DELETE BEFORE DEPLOY
+.confirm-delete-form-wrap {
+  .btn {
+    margin-bottom:10px;
+  }
+}
+
+.has-icon {
+  position:relative;
+  padding-left:50px;
+}
+
+.rocket-icon-header {
+  position:absolute;
+  width:30px;
+  left:0;
+  top:-10px;
+}
+
+.planet-icon-header {
+  position:absolute;
+  width:40px;
+  left:0;
+  top:-10px;
+}
+
+.label-paused {
+  @extend .label-default;
+}
+
+.label-cancelled {
+  @extend .label-warning;
+}
+
+tr.cancelled {
+  @extend .text-warning;
+  @extend .bg-warning;
+}
+
+.label-pending,
+.label-in_progress {
+  @extend .label-info;
+}
+
+tr.pending,
+tr.in_progress {
+  @extend .text-info;
+  @extend .bg-info;
+}
+
+.label-failed {
+  @extend .label-danger;
+}
+
+tr.failed {
+  @extend .text-danger;
+  @extend .bg-danger;
+}
+
+.label-successful {
+  @extend .label-success;
+}
+
+tr.successful {
+  @extend .text-success;
+  @extend .bg-success;
+}
+
+
+// ROCKET ICONOGRAPHY
+.content {
+  width:500px;
+  margin:0 auto;
+}
+
+.rocket {
+  @include border-radius(50% 50% 0 0 / 30% 30% 0 0);
+  width:100%;
+  background:$rocket-body-color;
+  position:relative;
+  z-index:100;
+  
+  &:after {
+    content:'';
+    padding-top:140%;
+    display:block;
+  }
+}
+
+.window {
+  @include border-radius(50%);
+  width:40%;
+  background:$rocket-contrast-color;
+  position:absolute;
+  left:30%;
+  top:25%;
+  
+  &:before {
+    width:70%;
+    height:70%;
+    display:block;
+    position:absolute;
+    top:15%;
+    left:15%;
+    background:$rocket-body-color;
+    content:'';
+    @include border-radius(50%);
+  }
+  
+  &:after {
+    content:'';
+    padding-top:100%;
+    display:block;
+  }
+}
+
+.fin {
+  width:60%;
+  background:none;
+  position:absolute;
+  left:-60%;
+  bottom:-10%;
+  overflow:hidden;
+  
+  &:after {
+    content:'';
+    padding-top:140%;
+    display:block;
+  }
+  
+  &:before {
+    content:'';
+    background:$rocket-contrast-color;
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:78%;
+    @include transform(rotate(22deg));
+  }
+  
+  &.right {
+    left:auto;
+    right:-60%;
+    
+    &:before {
+      @include transform(rotate(-22deg));
+      left:auto;
+      right:78%;
+    }
+  }
+}
+
+.booster {
+  @include border-radius(0 0 10% 10% / 0 0 10% 10%);
+  position:absolute;
+  bottom:-10%;
+  height:10%;
+  width:90%;
+  left:5%;
+  background:$rocket-contrast-color;
+  &:before { //Acts as a mask for the thruster fire
+    width:100%;
+    height:200%;
+    background:$rocket-body-color;
+    content:'';
+    display:block;
+    bottom:100%;
+    position:absolute;
+    left:0;
+  }
+}
+
+%tail {
+  position:absolute;
+  top:0;
+  left:25%;
+  width:50%;
+  z-index:-1;
+  
+  &:after {
+    content:'';
+    position:absolute;
+    top:0;
+    left:25%;
+    width:50%;
+    height:50%;
+    background:white;
+    @include transform(rotate(45deg));
+  }
+  
+  &:before {
+    content:'';
+    padding-top:100%;
+    display:block;
+  }
+}
+
+.tail {
+  @extend %tail;
+  -webkit-animation: burn .1s infinite linear;
+  display:none;
+  
+  .firing & {
+    display:block;
+  }
+}
+
+.tail2 {
+  @extend %tail;
+  width:80%;
+  left:10%;
+  top:-50%;
+  -webkit-animation: burn2 .1s infinite linear;
+  
+  &:after {
+    background:darkorange;
+  }
+}
+
+.tail3 {
+  @extend %tail;
+  width:100%;
+  left:0;
+  top:-60%;
+  -webkit-animation: burn3 .1s infinite linear;
+
+  
+  &:after {
+    background:red;
+    -webkit-animation: none;
+  }
+}
+
+@-webkit-keyframes burn {
+  0%    { top: -5%; }
+  25%   { top:-10%; }
+  50%   { top:-5%; }
+  75%   { top: -15%; }
+  100%  { top: 0; }
+}
+
+@-webkit-keyframes burn2 {
+  0%    { top: -55%; }
+  25%   { top:-50%; }
+  50%   { top:-55%; }
+  75%   { top: -55%; }
+  100%  { top: -60%; }
+}
+
+@-webkit-keyframes burn3 {
+  0%    { top: -60%; }
+  25%   { top:-65%; }
+  50%   { top:-70%; }
+  75%   { top: -75%; }
+  100%  { top: -60%; }
+}
+
+// PLANET ICONOGRAPHY
+.planet {
+  @include border-radius(50%);
+  background:$planet-outline-color;
+  width:100%;
+  position:relative;
+  
+  &:before {
+    padding-top:100%;
+    content:'';
+    display:block;
+  }
+  
+  &:after {
+    width:100%;
+    height:100%;
+    display:block;
+    background:$planet-color;
+    content:'';
+    position:absolute;
+    top:2%;
+    left:2%;
+    @include border-radius(50%);
+  }
+}
+
+.craters {
+  @include transform(rotate(65deg));
+  @include border-radius(50%);
+  position:absolute;
+  top:25%;
+  left:15%;
+  height:18%;
+  width:15%;
+  background:$planet-outline-color;
+  display:block;
+  z-index:10;
+  
+  &:before {
+    position:absolute;
+    left:-10%;
+    bottom:140%;
+    width:70%;
+    height:50%;
+    @include border-radius(50%);
+    background:inherit;
+    content:'';
+    display:block;
+    @include transform(rotate(12deg));
+  }
+  
+  &:after {
+    @include transform(rotate(33deg));
+    position:absolute;
+    left:100%;
+    top:-50%;
+    width:35%;
+    height:40%;
+    @include border-radius(50%);
+    background:inherit;
+    content:'';
+    display:block;
+  }
+}
+
+.craters-highlights {
+  top:26%;
+  background:lighten($planet-outline-color, 20%);
+}
+
+.craters2 {
+  left:70%;
+  top:70%;
+  height:10%;
+  width:10%;
+  @include transform(rotate(125deg));
+}
+
+.craters-highlights2 {
+  @extend .craters2;
+  @extend .craters-highlights;
+  top:71%;
+}
+
+.new_server,
+.edit_server,
+.new_destination,
+.edit_destination {
+  max-width:400px;
+
+  .btn-primary {
+    margin-right:10px;
+  }
+}
+
+#access_control_method_fields {
+  &.user {
+    .user-select {
+      display:block;
+    }
+
+    .git-repository {
+      display:none;
+    }
+  }
+
+  &.git_repository_url {
+    .user-select {
+      display:none;
+    }
+
+    .git-repository {
+      display:block;
+    }
+  }
+}
+
+.pending-deployment-visual {
+  position:relative;
+  overflow:hidden;
+
+  &:before {
+    content:'';
+    padding-top:100%;
+    display:block;
+  }
+
+  .rocket {
+    position:absolute;
+    top:15%;
+    left:15%;
+    @include transform(rotate(120deg));
+    width:20%;
+  }
+
+  .planet {
+    position:absolute;
+    top:35%;
+    left:45%;
+  }
+}
+
+@media (min-width: $screen-sm-min) { 
+  .table {
+    thead {
+      tr {
+        display:table-row;
+      }
+    }
+
+    tr {
+      display:table-row;
+      border:none;
+    }
+
+    td {
+      display:table-cell;
+
+      &:before {
+        display:none;
+      }
+    }
+
+    & > tbody > tr > td {
+      border-top-width:1px;
+    }
+  }
+
+  .what-to-deploy {
+    &:after {
+      display:none;
+    }
+
+    .form-fields {
+      margin:200px auto 0;
+      padding:0;
+    }
+    
+    .rocket {
+      left:34%;
+      top:0;
+      width:32%;
+      max-width:none;
+    }
+  }
+
+  .where-to-deploy {
+    overflow:visible;
+
+
+    .form-fields {
+      padding:0;
+      margin:200px auto 0;
+    }
+
+    .planet {
+      max-width:none;
+      left:26%;
+      top:0;
+      width:48%;
+    }
+  }
+
+  .btn-deploy {
+    font-size:$font-size-h1;
+    max-width:768px;
+    margin:0 auto;
+  }
+
+  .pending-deployment-visual {
+    position:relative;
+    overflow:hidden;
+
+    &:before {
+      content:'';
+      padding-top:60%;
+      display:block;
+    }
+
+    .rocket {
+      position:absolute;
+      top:15%;
+      left:15%;
+      @include transform(rotate(120deg));
+      width:20%;
+    }
+
+    .planet {
+      position:absolute;
+      top:35%;
+      left:45%;
+    }
+  }
+}
+
+@media (min-width: $screen-md-min) {
+  .what-to-deploy {
+    .rocket {
+      width:70%;
+      left:15%;
+    }
+
+    .form-fields {
+      width:65%;
+      margin:240px auto 0;
+
+      label,
+      h3 {
+        color:$body-bg;
+      }
+    }
+  }
+
+  .where-to-deploy {
+    .planet {
+      width:98%;
+      left:1%;
+      top:2%;
+    }
+
+    .form-fields {
+      width:65%;
+      margin:240px auto 0;
+    }
+  }
+
+  .deployment-form-fields-wrap {
+    margin-bottom:80px;
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .what-to-deploy {
+    .form-fields {
+      margin-top:300px;
+    }
+  }
+
+  .where-to-deploy {
+    .planet {
+      left:-2%;
+    }
+
+    .form-fields {
+      margin-top:300px;
+    }
+  }
+
+  .deployment-form-fields-wrap {
+    margin-bottom:160px;
+  }
+}
