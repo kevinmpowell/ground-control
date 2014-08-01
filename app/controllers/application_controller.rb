@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!
+  before_action :set_github_issues, only: [:home]
+
 
   def home
   end
@@ -13,6 +15,13 @@ class ApplicationController < ActionController::Base
     unless current_user.admin?
       redirect_to root_path, notice: "You must be an admin to access that area."
     end
+  end
+
+  def set_github_issues
+    github = Github.new oauth_token: current_user.auth_token
+    @eightshapes_issues = github.issues.list org: 'eightshapes', sort: 'updated', per_page: 100
+    @marriott_issues = github.issues.list org: 'marriottdigital', sort: 'updated', per_page: 100
+    @github_issues = @eightshapes_issues.to_a.concat(@marriott_issues.to_a)
   end
 
   def set_github_repositories

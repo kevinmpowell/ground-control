@@ -10,9 +10,7 @@ class User < ActiveRecord::Base
 
    validates :github_username, presence: true, uniqueness: true
 
-   has_many :deployments
-   has_many :destinations
-   has_many :servers
+   has_many :issues
 
     default_scope { order('LOWER(name) ASC') }
 
@@ -21,7 +19,6 @@ class User < ActiveRecord::Base
     
     if github.orgs.members.member? ENV['GITHUB_ORGANIZATION_AUTH_NAME'], auth.info.nickname
       email = self.get_organization_email_address(github)
-      puts auth.to_yaml
       user = where(auth.slice(:provider, :uid)).first
       user = user.nil? ? new : user
       user.provider = auth.provider
@@ -40,6 +37,7 @@ class User < ActiveRecord::Base
       # end
       
       user.save
+      GithubService.synchronize_issues_for_user(user.id)
     end
     user.nil? ? new : user #If the user is not allowed to access the app and an account can't be created, pass an empty user instance back to Devise
   end
