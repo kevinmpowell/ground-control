@@ -1,41 +1,45 @@
 class SynchronizeIssueWorker
   include Sidekiq::Worker
 
-  def perform(url, state, number, title, assignee, body, creator, comment_count, issue_created_at, issue_updated_at, closed_at, user_id)
-  	# milestone_data = JSON.parse milestone_data
-  	issue = Issue.find_or_create_by(url: url, user_id: user_id) do |issue|
-	  issue.url = url
-	  issue.state = state
-	  issue.number = number
-	  issue.title = title
-	  issue.body = body
-	  issue.assignee = assignee
-	  # issue.labels = labels_data
-	  issue.creator = creator
-	  issue.comment_count = comment_count
-	  issue.issue_created_at = issue_created_at.to_datetime
-	  issue.issue_updated_at = issue_updated_at.to_datetime
-	  issue.locally_sorted = false
-	  issue.local_sort_order = nil
-	  issue.user_id = user_id
+  def perform(github_issue_url, user_id)
+  	user = User.find(user_id)
+  	auth_token = user.auth_token
+  	issue_data = GithubService.get_issue_data_via_url(github_issue_url, auth_token)
 
-	  # TODO - Add method to auto-add client ID based on repo
+  	issue = Issue.find_or_initialize_by(url: issue_data["url"], user_id: user_id)
+	issue.url = issue_data["url"]
+	issue.state = issue_data["state"]
+	issue.number = issue_data["number"]
+	issue.title = issue_data["title"]
+	issue.body = issue_data["body"]
+	issue.assignee = issue_data["assignee"]["login"]
+	issue.labels = issue_data["labels"].to_json
+	issue.creator = issue_data["creator"]
+	issue.comment_count = issue_data["comments"]
+	issue.issue_created_at = issue_data["created_at"].to_datetime
+	issue.issue_updated_at = issue_data["updated_at"].to_datetime
+	issue.locally_sorted = false
+	issue.local_sort_order = nil
+	issue.user_id = user_id
 
-	 #  unless milestone_data.nil?
-	 #  	issue.milestone_name = milestone_data["title"]
-	 #  	issue.milestone_state = milestone_data["state"]
-	 #  	issue.milestone_due_on = milestone_data["due_on"]
+	#  # TODO - Add method to auto-add client ID based on repo
 
-	 #  	unless milestone_data["due_on"].nil?
-		#   	issue.milestone_due_on = milestone_data["due_on"].to_date
-		# end
-	 #  end
+	unless issue_data["milestone"].nil?
+		issue.milestone_name = issue_data["milestone"]["title"]
+		issue.milestone_state = issue_data["milestone"]["state"]
+		issue.milestone_due_on = issue_data["milestone"]["due_on"]
 
-	  issue.closed = false
-	  if state == "closed"
-	  	issue.closed_at = closed_at.to_datetime
-	  	issue.closed = true
-	  end
+		unless issue_data["milestone"]["due_on"].nil?
+		  	issue.milestone_due_on = issue_data["milestone"]["due_on"].to_date
+		end
 	end
+
+	issue.closed = false
+	if issue.state == "closed"
+		issue.closed_at = issue_data["closed_at"].to_datetime
+		issue.closed = true
+	end
+
+	issue.save
   end
 end

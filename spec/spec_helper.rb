@@ -35,7 +35,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.rspec_hue_light_id = 3
+  config.rspec_hue_light_id = 7
   config.infer_base_class_for_anonymous_controllers = false
   config.use_transactional_fixtures = false
   config.include Warden::Test::Helpers
@@ -75,6 +75,8 @@ RSpec.configure do |config|
     login_as(@current_user, :scope => :user)
     stub_request(:get, "https://api.github.com/orgs/eightshapes/issues?access_token=fake-token-here&per_page=100&sort=updated").to_return(:status => 200, :body => eightshapes_issues)
     stub_request(:get, "https://api.github.com/orgs/marriottdigital/issues?access_token=fake-token-here&per_page=100&sort=updated").to_return(:status => 200, :body => marriottdigital_issues)
+    stub_request(:get, "https://api.github.com/repos/marriottdigital/Foundations/issues/1347?access_token=fake-token-here").to_return(:status => 200, :body => marriottdigital_single_issue)
+    stub_request(:get, "https://api.github.com/repos/marriottdigital/Foundations/issues/13478?access_token=fake-token-here").to_return(:status => 200, :body => marriottdigital_single_issue_closed)
   end
 
 
@@ -288,5 +290,202 @@ def marriottdigital_issues
       "updated_at": "2011-04-22T13:33:48Z"
     }
   ]
+  EOT
+end
+
+def marriottdigital_single_issue
+  <<-EOT
+  {
+    "url": "https://api.github.com/repos/marriottdigital/Foundations/issues/1347",
+    "html_url": "https://github.com/marriottdigital/Foundations/issues/1347",
+    "number": 1347,
+    "state": "open",
+    "title": "Found a bug",
+    "body": "I'm having a problem with this.",
+    "user": {
+      "login": "jamesmelzer",
+      "id": 1,
+      "avatar_url": "https://github.com/images/error/marriottdigital_happy.gif",
+      "gravatar_id": "somehexcode",
+      "url": "https://api.github.com/users/marriottdigital",
+      "html_url": "https://github.com/marriottdigital",
+      "followers_url": "https://api.github.com/users/marriottdigital/followers",
+      "following_url": "https://api.github.com/users/marriottdigital/following{/other_user}",
+      "gists_url": "https://api.github.com/users/marriottdigital/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/marriottdigital/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/marriottdigital/subscriptions",
+      "organizations_url": "https://api.github.com/users/marriottdigital/orgs",
+      "repos_url": "https://api.github.com/users/marriottdigital/repos",
+      "events_url": "https://api.github.com/users/marriottdigital/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/marriottdigital/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "url": "https://api.github.com/repos/marriottdigital/Foundations/labels/bug",
+        "name": "bug",
+        "color": "f29513"
+      }
+    ],
+    "assignee": {
+      "login": "jonqdoe",
+      "id": 1,
+      "avatar_url": "https://github.com/images/error/jonqdoe_happy.gif",
+      "gravatar_id": "somehexcode",
+      "url": "https://api.github.com/users/jonqdoe",
+      "html_url": "https://github.com/jonqdoe",
+      "followers_url": "https://api.github.com/users/jonqdoe/followers",
+      "following_url": "https://api.github.com/users/jonqdoe/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jonqdoe/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jonqdoe/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jonqdoe/subscriptions",
+      "organizations_url": "https://api.github.com/users/jonqdoe/orgs",
+      "repos_url": "https://api.github.com/users/jonqdoe/repos",
+      "events_url": "https://api.github.com/users/jonqdoe/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jonqdoe/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "milestone": {
+      "url": "https://api.github.com/repos/marriottdigital/Foundations/milestones/1",
+      "number": 1,
+      "state": "open",
+      "title": "August Batch",
+      "description": "",
+      "creator": {
+        "login": "marriottdigital",
+        "id": 1,
+        "avatar_url": "https://github.com/images/error/marriottdigital_happy.gif",
+        "gravatar_id": "somehexcode",
+        "url": "https://api.github.com/users/marriottdigital",
+        "html_url": "https://github.com/marriottdigital",
+        "followers_url": "https://api.github.com/users/marriottdigital/followers",
+        "following_url": "https://api.github.com/users/marriottdigital/following{/other_user}",
+        "gists_url": "https://api.github.com/users/marriottdigital/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/marriottdigital/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/marriottdigital/subscriptions",
+        "organizations_url": "https://api.github.com/users/marriottdigital/orgs",
+        "repos_url": "https://api.github.com/users/marriottdigital/repos",
+        "events_url": "https://api.github.com/users/marriottdigital/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/marriottdigital/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "open_issues": 4,
+      "closed_issues": 8,
+      "created_at": "2011-04-10T20:09:31Z",
+      "updated_at": "2014-03-03T18:58:10Z",
+      "due_on": null
+    },
+    "comments": 0,
+    "pull_request": {
+      "url": "https://api.github.com/repos/marriottdigital/Foundations/pulls/1347",
+      "html_url": "https://github.com/marriottdigital/Foundations/pull/1347",
+      "diff_url": "https://github.com/marriottdigital/Foundations/pull/1347.diff",
+      "patch_url": "https://github.com/marriottdigital/Foundations/pull/1347.patch"
+    },
+    "closed_at": null,
+    "created_at": "2011-04-22T13:33:48Z",
+    "updated_at": "2011-04-22T13:33:48Z"
+  }
+  EOT
+end
+def marriottdigital_single_issue_closed
+  <<-EOT
+  {
+    "url": "https://api.github.com/repos/marriottdigital/Foundations/issues/13478",
+    "html_url": "https://github.com/marriottdigital/Foundations/issues/13478",
+    "number": 13478,
+    "state": "closed",
+    "title": "Found a bug",
+    "body": "I'm having a problem with this.",
+    "user": {
+      "login": "jamesmelzer",
+      "id": 1,
+      "avatar_url": "https://github.com/images/error/marriottdigital_happy.gif",
+      "gravatar_id": "somehexcode",
+      "url": "https://api.github.com/users/marriottdigital",
+      "html_url": "https://github.com/marriottdigital",
+      "followers_url": "https://api.github.com/users/marriottdigital/followers",
+      "following_url": "https://api.github.com/users/marriottdigital/following{/other_user}",
+      "gists_url": "https://api.github.com/users/marriottdigital/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/marriottdigital/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/marriottdigital/subscriptions",
+      "organizations_url": "https://api.github.com/users/marriottdigital/orgs",
+      "repos_url": "https://api.github.com/users/marriottdigital/repos",
+      "events_url": "https://api.github.com/users/marriottdigital/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/marriottdigital/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "url": "https://api.github.com/repos/marriottdigital/Foundations/labels/bug",
+        "name": "bug",
+        "color": "f29513"
+      }
+    ],
+    "assignee": {
+      "login": "jonqdoe",
+      "id": 1,
+      "avatar_url": "https://github.com/images/error/jonqdoe_happy.gif",
+      "gravatar_id": "somehexcode",
+      "url": "https://api.github.com/users/jonqdoe",
+      "html_url": "https://github.com/jonqdoe",
+      "followers_url": "https://api.github.com/users/jonqdoe/followers",
+      "following_url": "https://api.github.com/users/jonqdoe/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jonqdoe/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jonqdoe/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jonqdoe/subscriptions",
+      "organizations_url": "https://api.github.com/users/jonqdoe/orgs",
+      "repos_url": "https://api.github.com/users/jonqdoe/repos",
+      "events_url": "https://api.github.com/users/jonqdoe/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jonqdoe/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "milestone": {
+      "url": "https://api.github.com/repos/marriottdigital/Foundations/milestones/1",
+      "number": 1,
+      "state": "open",
+      "title": "August Batch",
+      "description": "",
+      "creator": {
+        "login": "marriottdigital",
+        "id": 1,
+        "avatar_url": "https://github.com/images/error/marriottdigital_happy.gif",
+        "gravatar_id": "somehexcode",
+        "url": "https://api.github.com/users/marriottdigital",
+        "html_url": "https://github.com/marriottdigital",
+        "followers_url": "https://api.github.com/users/marriottdigital/followers",
+        "following_url": "https://api.github.com/users/marriottdigital/following{/other_user}",
+        "gists_url": "https://api.github.com/users/marriottdigital/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/marriottdigital/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/marriottdigital/subscriptions",
+        "organizations_url": "https://api.github.com/users/marriottdigital/orgs",
+        "repos_url": "https://api.github.com/users/marriottdigital/repos",
+        "events_url": "https://api.github.com/users/marriottdigital/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/marriottdigital/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "open_issues": 4,
+      "closed_issues": 8,
+      "created_at": "2011-04-10T20:09:31Z",
+      "updated_at": "2014-03-03T18:58:10Z",
+      "due_on": null
+    },
+    "comments": 10,
+    "pull_request": {
+      "url": "https://api.github.com/repos/marriottdigital/Foundations/pulls/1347",
+      "html_url": "https://github.com/marriottdigital/Foundations/pull/1347",
+      "diff_url": "https://github.com/marriottdigital/Foundations/pull/1347.diff",
+      "patch_url": "https://github.com/marriottdigital/Foundations/pull/1347.patch"
+    },
+    "closed_at": "2011-04-23T13:33:48Z",
+    "created_at": "2011-04-22T13:33:48Z",
+    "updated_at": "2011-04-22T13:33:48Z"
+  }
   EOT
 end

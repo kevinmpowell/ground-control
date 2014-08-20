@@ -7,7 +7,7 @@ class CreateIssue < ActiveRecord::Migration
       t.string :state
       t.integer :number
       t.string :assignee
-      t.string :labels
+      t.text :labels
       t.string :creator
       t.string :milestone_name
       t.date :milestone_due_on

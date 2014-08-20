@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140801204236) do
     t.string   "state"
     t.integer  "number"
     t.string   "assignee"
-    t.string   "labels"
+    t.text     "labels"
     t.string   "creator"
     t.string   "milestone_name"
     t.date     "milestone_due_on"
