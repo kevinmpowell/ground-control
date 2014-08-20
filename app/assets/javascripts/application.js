@@ -15,4 +15,6 @@
 //= require turbolinks
 // Loads all Bootstrap javascripts
 //= require bootstrap
+//= require websocket_rails/main
 //= require_tree .
+
