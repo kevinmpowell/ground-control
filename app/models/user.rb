@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
       # end
       
       user.save
-      GithubService.synchronize_issues_for_user(user.id)
     end
     user.nil? ? new : user #If the user is not allowed to access the app and an account can't be created, pass an empty user instance back to Devise
   end

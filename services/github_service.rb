@@ -15,10 +15,10 @@ class GithubService
       end
   end
 
-  # def self.get_issue_data github_org, repo, number, auth_token
-  #   github = Github.new oauth_token: auth_token
-  #   github.issues.get(github_org, repo, number).to_hash
-  # end
+  def self.get_issue_data github_org, repo, number, auth_token
+    github = Github.new oauth_token: auth_token
+    github.issues.get(github_org, repo, number).to_hash
+  end
 
   def self.get_issue_data_via_url url, auth_token
     url_data = url.sub('https://api.github.com/', '').split('/')
