@@ -1,6 +1,6 @@
 // Nothing here yet
 
-var dispatcher = new WebSocketRails('localhost:3001/websocket');
+var dispatcher = new WebSocketRails("<%= ENV['WEBSOCKET_HOSTNAME'] %>:3001/websocket ");
 
 dispatcher.bind('github_status', function(data) {
   console.log(data); // would output 'this is a message'
