@@ -6,7 +6,10 @@ class GithubService
       user_orgs = ['eightshapes', 'marriottdigital']
       issues = []
       user_orgs.each do |org_name|
-        org_issues = github.issues.list org: org_name, sort: 'updated', per_page: 100
+        args = {org: org_name, sort: 'updated', per_page: 100}
+        args[:since] = user.last_github_sync_at.utc.iso8601 unless user.last_github_sync_at.nil?
+
+        org_issues = github.issues.list args
         issues = issues.to_a.concat(org_issues.to_a)
       end
 
@@ -17,6 +20,8 @@ class GithubService
       issues.each do |issue|
         SynchronizeIssueWorker.perform_async(issue["url"], user_id)
       end
+
+      user.update_attributes({last_github_sync_at: Time.now})
   end
 
   def self.get_issue_data github_org, repo, number, auth_token
