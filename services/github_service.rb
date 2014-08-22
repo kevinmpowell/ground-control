@@ -24,4 +24,10 @@ class GithubService
     url_data = url.sub('https://api.github.com/', '').split('/')
     self.get_issue_data(url_data[1], url_data[2], url_data[4], auth_token)
   end
+
+  def self.test_message message
+    Pusher['test_channel'].trigger('my_event', {
+      message: message
+    })
+  end
 end

@@ -42,7 +42,7 @@ gem 'newrelic_rpm'
 gem "compass-rails"
 gem "font-awesome-rails"
 gem 'bootstrap-sass', '~> 3.1.1'
-gem 'websocket-rails'
+gem 'pusher'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
