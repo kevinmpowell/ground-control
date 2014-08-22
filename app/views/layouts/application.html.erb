@@ -2,6 +2,12 @@
 <html>
 <head>
 	<title>Mission Control</title>
+	<script>
+		<% if current_user %>
+			current_user_pusher_channel = '<%= PusherService.get_channel_name_for_user(current_user) %>'
+			current_user_id = '<%= current_user.id %>'
+		<% end %>
+	</script>
 	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	<%= csrf_meta_tags %>
@@ -25,7 +31,13 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<% if user_signed_in? %>
 	       <ul class="nav navbar-nav">
-	       
+	       	<li>
+	       		<div class="github-sync-progress">
+	       			<div class="github-sync-progress-inner">
+							       				
+	       			</div>
+	       		</div>
+	       	</li>
 	      </ul>
 
 	      <ul class="nav navbar-nav navbar-right">

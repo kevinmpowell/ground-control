@@ -1,19 +1,13 @@
-class ApplicationController < ActionController::Base
+class GithubServiceController < ApplicationController
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!
 
-  def home
-    @github_issues = Issue.where(user: current_user)
-  end
-
-  private
-	def admin_user?
-    unless current_user.admin?
-      redirect_to root_path, notice: "You must be an admin to access that area."
-    end
+  def synchronize_github_issues
+      GithubService.synchronize_issues_for_user(params[:user_id])
+      render nothing: true
   end
 
   # def set_github_issues

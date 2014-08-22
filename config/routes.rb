@@ -12,6 +12,8 @@ MissionControl::Application.routes.draw do
     get 'signout', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
+  put 'synchronize-github-issues-for-user/:user_id', :to => 'github_service#synchronize_github_issues'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

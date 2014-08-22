@@ -41,5 +41,9 @@ class SynchronizeIssueWorker
 	end
 
 	issue.save
+
+	PusherService.trigger_event_on_user_channel(user, 'github_issue_synced', {
+		issue_title: issue.title
+	})
   end
 end

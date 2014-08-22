@@ -5,8 +5,59 @@ Pusher.log = function(message) {
   }
 };
 
-var pusher = new Pusher("<%= ENV['PUSHER_CLIENT_KEY']%>");
-var channel = pusher.subscribe('test_channel');
-channel.bind('my_event', function(data) {
-  alert(data.message);
-});
+var GithubSyncMonitor = function(websockets_channel){
+	var issues_to_be_synced = 0;
+	var issues_synchronized = 0;
+	var $progress_bar = $(".github-sync-progress-inner");
+
+	function update_progress_bar_width(){
+		var width = (issues_synchronized / issues_to_be_synced) * 100;
+		$progress_bar.css({"width":width+"%"});
+	}
+
+	function update_github_issue_sync_count(data){
+		issues_to_be_synced = data.total_issues;
+		console.log("TO BE SYNCED: " + issues_to_be_synced);
+	}
+
+	function update_github_issues_synced(data) {
+		console.log(data.issue_title + " - Synced");
+		issues_synchronized++;
+		console.log("ISSUES SYNCHRONIZED: " + issues_synchronized);
+		if (issues_synchronized == issues_to_be_synced){
+			$progress_bar.addClass("complete");
+		}
+		update_progress_bar_width();
+	}
+
+	function bind_websockets_events(){
+		websockets_channel.bind('github_issue_sync_count', function(data) {
+		  update_github_issue_sync_count(data);
+		});
+
+		websockets_channel.bind('github_issue_synced', function(data) {
+		  update_github_issues_synced(data);
+		});
+	}
+
+	function init() {
+		bind_websockets_events();
+	}
+
+	init();
+}
+
+$(document).ready(function(){
+	if (typeof current_user_pusher_channel !== undefined) {
+		var pusher = new Pusher("<%= ENV['PUSHER_CLIENT_KEY']%>");
+		var channel = pusher.subscribe(current_user_pusher_channel);
+
+		channel.bind('pusher:subscription_succeeded', function(){
+			$.ajax({
+				url:'synchronize-github-issues-for-user/' + current_user_id,
+				type: 'PUT'
+			});
+		});
+		GithubSyncMonitor = new GithubSyncMonitor(channel);
+	}
+})

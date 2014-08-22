@@ -10,6 +10,10 @@ class GithubService
         issues = issues.to_a.concat(org_issues.to_a)
       end
 
+      PusherService.trigger_event_on_user_channel(user, 'github_issue_sync_count', {
+        total_issues: issues.count
+      })
+
       issues.each do |issue|
         SynchronizeIssueWorker.perform_async(issue["url"], user_id)
       end
@@ -23,11 +27,5 @@ class GithubService
   def self.get_issue_data_via_url url, auth_token
     url_data = url.sub('https://api.github.com/', '').split('/')
     self.get_issue_data(url_data[1], url_data[2], url_data[4], auth_token)
-  end
-
-  def self.test_message message
-    Pusher['test_channel'].trigger('my_event', {
-      message: message
-    })
   end
 end
