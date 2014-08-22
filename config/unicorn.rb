@@ -3,7 +3,7 @@ timeout 15
 preload_app true
 
 before_fork do |server, worker|
-  @sidekiq_pid ||= spawn("bundle exec sidekiq -c 2")
+  @sidekiq_pid ||= spawn("bundle exec sidekiq -c 1")
   @socket_pid ||= spawn("bundle exec rake websocket_rails:start_server")
   
   Signal.trap 'TERM' do
