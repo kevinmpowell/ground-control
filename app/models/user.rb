@@ -16,8 +16,10 @@ class User < ActiveRecord::Base
 
 	def self.find_for_github_oauth(auth)
     github = Github.new oauth_token: auth.credentials.token
-    
-    if github.orgs.members.member? ENV['GITHUB_ORGANIZATION_AUTH_NAME'], auth.info.nickname
+    puts auth.info.nickname
+    puts ENV['AUTHORIZED_GITHUB_USERNAME']
+
+    if ENV['AUTHORIZED_GITHUB_USERNAME'] == auth.info.nickname
       email = self.get_organization_email_address(github)
       user = where(auth.slice(:provider, :uid)).first
       user = user.nil? ? new : user
