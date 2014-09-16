@@ -9,6 +9,7 @@ class SynchronizeIssueWorker
   	begin
 	  	issue_data = GithubService.get_issue_data_via_url(github_issue_url, auth_token)
 		issue.url = issue_data["url"]
+		issue.html_url = issue_data["html_url"]
 		issue.state = issue_data["state"]
 		issue.number = issue_data["number"]
 		issue.title = issue_data["title"]
@@ -19,9 +20,9 @@ class SynchronizeIssueWorker
 		issue.comment_count = issue_data["comments"]
 		issue.issue_created_at = issue_data["created_at"].to_datetime
 		issue.issue_updated_at = issue_data["updated_at"].to_datetime
-		issue.locally_sorted = false
-		issue.local_sort_order = nil
 		issue.user_id = user_id
+
+
 
 		issue_url_array = issue.url.split('/')
 		preceding_index = issue_url_array.index('repos') #API url attribute example: https://api.github.com/repos/octocat/Hello-World/issues/1347
@@ -41,6 +42,12 @@ class SynchronizeIssueWorker
 			unless issue_data["milestone"]["due_on"].nil?
 			  	issue.milestone_due_on = issue_data["milestone"]["due_on"].to_date
 			end
+		end
+
+		unless issue.locally_sorted?
+			issue.locally_sorted = false
+			issue.local_sort_order = nil
+			puts "STOMPING SORT ORDER!!"
 		end
 
 		issue.closed = false

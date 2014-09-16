@@ -15,6 +15,7 @@ MissionControl::Application.routes.draw do
   end
 
   put 'synchronize-github-issues-for-user/:user_id', :to => 'github_service#synchronize_github_issues'
+  put 'update-issue-sort-order', :to => 'issues#update_issue_sort_order', :format => :json
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
