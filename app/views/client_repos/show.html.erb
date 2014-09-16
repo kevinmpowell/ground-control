@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Client name:</strong>
+  <%= @client_repo.client_name %>
+</p>
+
+<p>
+  <strong>Repo name:</strong>
+  <%= @client_repo.repo_name %>
+</p>
+
+<%= link_to 'Edit', edit_client_repo_path(@client_repo) %> |
+<%= link_to 'Back', client_repos_path %>

@@ -1,0 +1,8 @@
+<li class="issue-list-item <%= issue.closed? ? 'closed' : 'open' %>">
+	<h2 class="issue-list-item-title"><%= issue["title"] %></h2>
+	<span class="issue-list-item-number">#<%= issue["number"] %></span>
+	<p><%#= raw @markdown_renderer.render(issue["body"]) %></p>
+	<a href="<%= issue.url %>"><%= issue.url %></a><br/>
+	<span><%= issue.client_name %></span><br/>
+	<span><%= issue.repo_name %></span>
+</li>

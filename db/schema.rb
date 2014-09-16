@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822184418) do
+ActiveRecord::Schema.define(version: 20140916192325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "client_repos", force: true do |t|
+    t.string   "client_name"
+    t.string   "repo_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "issues", force: true do |t|
     t.string   "url"
@@ -37,6 +44,9 @@ ActiveRecord::Schema.define(version: 20140822184418) do
     t.integer  "local_sort_order"
     t.integer  "client_id"
     t.integer  "user_id"
+    t.string   "repo_name"
+    t.string   "client_name"
+    t.boolean  "archived",         default: false
   end
 
   create_table "users", force: true do |t|

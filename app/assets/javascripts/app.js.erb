@@ -50,15 +50,35 @@ var GithubSyncMonitor = function(websockets_channel){
 		});
 	}
 
+	function initiate_github_sync_for_current_user() {
+		$.ajax({
+			url:'synchronize-github-issues-for-user/' + current_user_id,
+			type: 'PUT'
+		});
+	}
+
 	function bind_listeners(){
 		$(document).on("github-issue-sync-complete", function(){
 			set_progress_bar_state({"state": "complete"});
 		});
+
+		$(document).on("synchronize-github-issues-for-current-user", function(){
+			initiate_github_sync_for_current_user();
+		});
+	}
+
+	function bind_event_handlers() {
+		$(document).on("click", ".js-synchronize-github-issues-for-current-user", function(e){
+			e.preventDefault();
+			$(document).trigger("synchronize-github-issues-for-current-user");
+		});
 	}
 
 	function init() {
+		bind_event_handlers();
 		bind_listeners();
 		bind_websockets_events();
+		initiate_github_sync_for_current_user();
 	}
 
 	init();
@@ -70,11 +90,7 @@ $(document).ready(function(){
 		var channel = pusher.subscribe(current_user_pusher_channel);
 
 		channel.bind('pusher:subscription_succeeded', function(){
-			$.ajax({
-				url:'synchronize-github-issues-for-user/' + current_user_id,
-				type: 'PUT'
-			});
+			GithubSyncMonitor = new GithubSyncMonitor(channel);
 		});
-		GithubSyncMonitor = new GithubSyncMonitor(channel);
 	}
 })

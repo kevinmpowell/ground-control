@@ -1,8 +1,8 @@
-<h1>You're In!</h1>
+<h1><%= pluralize(@github_issues.count, "Issue") %></h1>
 <% unless @github_issues.nil? %>
-	<ul>
+	<ul class="issue-list">
 		<% @github_issues.each do |issue| %>
-			<li><%= issue["title"] %></li>
+			<%= render 'shared/issue_list_item', issue: issue %>
 		<% end %>
 	</ul>
 <% end %>

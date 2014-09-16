@@ -4,7 +4,8 @@ class GithubService
       github = Github.new oauth_token: user.auth_token
       #Todo make these orgs part of the user profile and iterate over them to collect the issues
       user_orgs = ['eightshapes', 'marriottdigital']
-      issues = []
+      issues = Issue.where({user_id: user_id, archived: false}).all
+
       user_orgs.each do |org_name|
         args = {org: org_name, sort: 'updated', per_page: 100}
         args[:since] = user.last_github_sync_at.utc.iso8601 unless user.last_github_sync_at.nil?
@@ -12,6 +13,8 @@ class GithubService
         org_issues = github.issues.list args
         issues = issues.to_a.concat(org_issues.to_a)
       end
+
+      issues.uniq! {|i| i["url"]}
 
       PusherService.trigger_event_on_user_channel(user, 'github_issue_sync_count', {
         total_issues: issues.count

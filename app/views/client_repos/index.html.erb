@@ -1,0 +1,29 @@
+<h1>Listing client_repos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Client name</th>
+      <th>Repo name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @client_repos.each do |client_repo| %>
+      <tr>
+        <td><%= client_repo.client_name %></td>
+        <td><%= client_repo.repo_name %></td>
+        <td><%= link_to 'Show', client_repo %></td>
+        <td><%= link_to 'Edit', edit_client_repo_path(client_repo) %></td>
+        <td><%= link_to 'Destroy', client_repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Client repo', new_client_repo_path %>

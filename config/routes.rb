@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 MissionControl::Application.routes.draw do
+  resources :client_repos
+
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
   end

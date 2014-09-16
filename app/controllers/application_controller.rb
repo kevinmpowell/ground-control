@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   def home
-    @github_issues = Issue.where(user: current_user)
+    @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    @github_issues = Issue.where({user: current_user, archived: false})
   end
 
   private

@@ -1,0 +1,25 @@
+<%= form_for(@client_repo) do |f| %>
+  <% if @client_repo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@client_repo.errors.count, "error") %> prohibited this client_repo from being saved:</h2>
+
+      <ul>
+      <% @client_repo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :client_name %><br>
+    <%= f.select :client_name, options_for_select([["Yahoo", "yahoo"], ["Marriott", "marriott"], ["EightShapes", "eightshapes"]]), prompt: "Select a Client", class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :repo_name %><br>
+    <%= f.select :repo_name, options_for_select(@github_repositories_select_options), prompt: "Select a repository", class: "form-control"  %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
