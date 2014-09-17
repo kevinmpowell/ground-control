@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Houston::Application.routes.draw do
   resources :client_repos
+  resources :issues, only: [:update]
 
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'

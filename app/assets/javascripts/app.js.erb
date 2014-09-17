@@ -103,7 +103,7 @@ var GithubIssueList = function() {
 				console.log(a);
 				console.log(b);
 				console.log(c);
-				alert("An error occurred while persisting the sort order");
+				alert("An error occurred while saving the sort order");
 			}
 		});
 	}
@@ -129,14 +129,54 @@ var GithubIssueList = function() {
 		$issue_list.addClass("client-filter-" + client_name);
 	}
 
+	function archive_issue(params) {
+		var $target = $(params.target);
+		var $list_item = $target.closest(".issue-list-item");
+		var proceed = confirm("Are you sure you want to archive this issue?");
+		if (proceed == true) {
+			var url = $target.attr("href");
+			$.ajax({
+				url:url,
+				data: {
+					issue: {
+						archived: true
+					}
+				},
+				dataType:'html',
+				type: 'PUT',
+				success: function(){
+					$list_item.addClass("archived");
+				},
+				error: function(a, b, c){
+					console.log(a);
+					console.log(b);
+					console.log(c);
+					alert("An error occurred while archiving the issue");
+				}
+			});
+		}
+	}
+
 	function bind_listeners() {
 		$(document).on("filter-by-client", function(e, params) {
 			filter_by_client(params);
+		});
+
+		$(document).on("archive-issue-requested", function(e, params) {
+			archive_issue(params);
+		});
+	}
+
+	function bind_event_handlers() {
+		$(document).on("click", ".js-archive-issue", function(e) {
+			e.preventDefault();
+			$(document).trigger("archive-issue-requested", {target: e.target});
 		});
 	}
 
 	function init() {
 		make_sortable();
+		bind_event_handlers();
 		bind_listeners();
 	}
 
