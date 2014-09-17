@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   def home
     @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     @github_issues = Issue.where({user: current_user, archived: false}).order('issues.local_sort_order ASC')
+    @client_names = Issue.uniq.select(:client_name).where({user: current_user, archived: false}).map(&:client_name)
   end
 
   private

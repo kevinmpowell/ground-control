@@ -227,3 +227,24 @@ label {
   padding:5px;
   font-size:16px;
 }
+
+.client-filter-eightshapes {
+  .yahoo,
+  .marriott {
+    display:none;
+  }
+}
+
+.client-filter-yahoo {
+  .eightshapes,
+  .marriott {
+    display:none;
+  }
+}
+
+.client-filter-marriott {
+  .eightshapes,
+  .yahoo {
+    display:none;
+  }
+}

@@ -117,10 +117,51 @@ var GithubIssueList = function() {
 		});
 	}
 
-	function init() {
-		make_sortable();
+	function filter_by_client(params) {
+		var $target = $(params.target);
+		var client_name = $target.val();
+
+		var client_names = params.client_names;
+		for (var index in client_names) {
+			$issue_list.removeClass("client-filter-" + client_names[index]);
+		}
+
+		$issue_list.addClass("client-filter-" + client_name);
 	}
 
+	function bind_listeners() {
+		$(document).on("filter-by-client", function(e, params) {
+			filter_by_client(params);
+		});
+	}
+
+	function init() {
+		make_sortable();
+		bind_listeners();
+	}
+
+	init();
+}
+
+var GithubIssueFilter = function() {
+	var client_names = [];
+
+	function set_client_names() {
+		$(".js-filter-by-client").each(function(){
+			client_names.push($(this).val());
+		});
+	}
+
+	function bind_event_handlers() {
+		$(document).on("change", ".js-filter-by-client", function(e) {
+			$(document).trigger($(e.target).data("event"), {target: e.target, client_names: client_names});
+		});
+	}
+
+	function init() {
+		set_client_names();
+		bind_event_handlers();
+	}
 	init();
 }
 
@@ -132,6 +173,7 @@ $(document).ready(function(){
 		channel.bind('pusher:subscription_succeeded', function(){
 			GithubSyncMonitor = new GithubSyncMonitor(channel);
 			GithubIssueList = new GithubIssueList();
+			GithubIssueFilter = new GithubIssueFilter();
 		});
 	}
 

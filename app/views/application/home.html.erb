@@ -1,4 +1,7 @@
 <h1><%= pluralize(@github_issues.count, "Issue") %></h1>
+
+<%= render 'shared/client_filter', client_names: @client_names %>
+
 <% unless @github_issues.nil? %>
 	<ul class="issue-list">
 		<% @github_issues.each do |issue| %>
