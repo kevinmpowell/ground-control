@@ -45,11 +45,16 @@ var GithubSyncMonitor = function(websockets_channel){
 		if (args.hasOwnProperty("state") && args.state == "complete"){
 			$progress_bar.css({"width":"100%"}).addClass("complete");
 		}
+		else {
+			$progress_bar.removeClass("complete");
+		}
 	}
 
 	function update_github_issue_sync_count(data){
 		issues_to_be_synced = data.total_issues;
+		issues_synchronized = 0; //reset count if syncing again
 		console.log("TO BE SYNCED: " + issues_to_be_synced);
+
 
 		if (data.total_issues == 0) {
 			$(document).trigger("github-issue-sync-complete");
@@ -68,7 +73,9 @@ var GithubSyncMonitor = function(websockets_channel){
 
 	function bind_websockets_events(){
 		websockets_channel.bind('github_issue_sync_count', function(data) {
-		  update_github_issue_sync_count(data);
+			update_github_issue_sync_count(data);
+			set_progress_bar_state("reset");
+			update_progress_bar_width();
 		});
 
 		websockets_channel.bind('github_issue_synced', function(data) {
