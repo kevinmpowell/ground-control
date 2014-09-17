@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/sortable
+//= require jquery.hotkeys
 //= require turbolinks
 // Loads all Bootstrap javascripts
 //= require bootstrap

@@ -1,9 +1,35 @@
-// Nothing here yet
 Pusher.log = function(message) {
   if (window.console && window.console.log) {
     window.console.log(message);
   }
 };
+
+var HoustonApp = function() {
+	function copy_github_commit_data_to_clipboard() {
+		var issue_url = $(".issue-list-item:visible:first").find(".issue-list-item-title a").attr("href");
+		var github_commit_string = 'git commit -m "[amends ' + issue_url + '] ';
+		window.prompt("Copy to clipboard: Ctrl+C, Enter", github_commit_string);
+	}
+
+	function bind_listeners() {
+		$(document).on("copy-github-commit-data-to-clipboard", function() {
+			copy_github_commit_data_to_clipboard();
+		});
+	}
+
+	function bind_event_handlers() {
+		$(document).on('keydown', null, 'ctrl+g', function() {
+			$(document).trigger("copy-github-commit-data-to-clipboard");
+		});
+	}
+
+	function init() {
+		bind_event_handlers();
+		bind_listeners();
+	}
+
+	init();
+}
 
 var GithubSyncMonitor = function(websockets_channel){
 	var issues_to_be_synced = 0;
@@ -214,6 +240,7 @@ $(document).ready(function(){
 			GithubSyncMonitor = new GithubSyncMonitor(channel);
 			GithubIssueList = new GithubIssueList();
 			GithubIssueFilter = new GithubIssueFilter();
+			HoustonApp = new HoustonApp();
 		});
 	}
 
