@@ -183,30 +183,41 @@ label {
 }
 
 .issue-list-item {
+  @include border-radius(0 10px 0 10px);
   position:relative;
   display:block;
   border-bottom:solid 1px darkgray;
+  border-top:solid 1px #efefef;
   min-height:80px;
   padding:10px 20px;
+  margin-bottom:10px;
+  overflow:hidden;
 
-  &.yahoo {
+  &:before {
+    content:'';
+    display:block;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    width:10px;
+    background:#ccc;
+  }
+
+  &.yahoo:before {
     background:lighten($yahoo-purple, 50%);
   }
 
-  &.eightshapes {
+  &.eightshapes:before {
     background:lighten($eightshapes-orange, 30%);
   }
 
-  &.marriott {
+  &.marriott:before {
     background:lighten($marriott-red, 50%);
   }
 
-  &.closed {
+  &.closed:before {
     background:red;
-    color:white;
-    a {
-      color:white;
-    }
   }
 
   &.archived {
@@ -266,4 +277,8 @@ label {
   background:#efefef;
   padding:10px 20px;
   margin:10px -20px -10px;
+
+  .badge{
+    border:solid 1px darken(#efefef, 20%);
+  }
 }
