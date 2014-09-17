@@ -45,6 +45,7 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'pusher'
 gem 'redcarpet'
 gem 'jquery-ui-rails'
+gem 'color'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

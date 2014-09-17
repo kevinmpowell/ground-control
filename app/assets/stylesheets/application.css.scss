@@ -185,7 +185,7 @@ label {
 .issue-list-item {
   position:relative;
   display:block;
-  border-bottom:solid 1px lightgray;
+  border-bottom:solid 1px darkgray;
   min-height:80px;
   padding:10px 20px;
 
@@ -227,7 +227,7 @@ label {
   top:0;
   bottom:0;
   right:0;
-  background:lightgray;
+  background:#efefef;
   padding:5px;
   font-size:16px;
 }
@@ -259,4 +259,11 @@ label {
   .yahoo {
     display:none;
   }
+}
+
+.issue-labels {
+  display:block;
+  background:#efefef;
+  padding:10px 20px;
+  margin:10px -20px -10px;
 }
