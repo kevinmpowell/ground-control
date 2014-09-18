@@ -4,11 +4,11 @@ class GithubService
       github = Github.new oauth_token: user.auth_token
       #Todo make these orgs part of the user profile and iterate over them to collect the issues
       user_orgs = ['eightshapes', 'marriottdigital']
-      issues = Issue.where({user_id: user_id, archived: false}).all
+      issues = Issue.where({user_id: user_id, archived: false}).all #Get all issues in the DB that are not already archived
 
       user_orgs.each do |org_name|
         args = {org: org_name, sort: 'updated', per_page: 100}
-        args[:since] = user.last_github_sync_at.utc.iso8601 unless user.last_github_sync_at.nil?
+        # args[:since] = user.last_github_sync_at.utc.iso8601 unless user.last_github_sync_at.nil?
 
         org_issues = github.issues.list args
         issues = issues.to_a.concat(org_issues.to_a)

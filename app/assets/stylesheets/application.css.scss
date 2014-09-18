@@ -27,6 +27,7 @@ $rocket-contrast-color:darken($rocket-body-color, 30%);
 body { 
 	padding-top: 70px; 
   padding-bottom:40px;
+  background:#ddd;
 }
 
 label {
@@ -193,6 +194,7 @@ label {
   padding:10px 20px;
   margin-bottom:10px;
   overflow:hidden;
+  background:white;
 
   &:before {
     content:'';

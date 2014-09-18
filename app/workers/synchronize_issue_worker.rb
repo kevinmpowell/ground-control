@@ -23,7 +23,6 @@ class SynchronizeIssueWorker
 		issue.user_id = user_id
 
 
-
 		issue_url_array = issue.url.split('/')
 		preceding_index = issue_url_array.index('repos') #API url attribute example: https://api.github.com/repos/octocat/Hello-World/issues/1347
 		# Trying to grab the section after the 'repos' part of the URL
@@ -47,18 +46,19 @@ class SynchronizeIssueWorker
 		unless issue.locally_sorted?
 			issue.locally_sorted = false
 			issue.local_sort_order = nil
-			puts "STOMPING SORT ORDER!!"
 		end
 
 		issue.closed = false
 		if issue.state == "closed"
 			issue.closed_at = issue_data["closed_at"].to_datetime
 			issue.closed = true
+		else
+			# Issue is open or has been reopened, make sure the issue isn't archived
+			issue.archived = false
 		end
 
 		issue.save
   	rescue Github::Error::NotFound
-  		puts "NOT FOUND GITHUUUUUUUUUUUUUUUUUUUUUUUUUB"
   		# The issue no longer exists at Github (could be a moved repo, or Github is down), flag the issue as archived
 	  	issue.archived = true
 	  	issue.save

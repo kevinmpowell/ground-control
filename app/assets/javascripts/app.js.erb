@@ -143,6 +143,7 @@ var GithubIssueList = function() {
 
 	function make_sortable() {
 		$issue_list.sortable({
+			axis: "y",
 			stop: function(event, ui) {
 				var sorted_issue_ids = $issue_list.sortable("toArray", {attribute:"data-issue-id"});
 				update_issue_sort_order(sorted_issue_ids);
