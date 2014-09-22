@@ -1,29 +1,26 @@
 <script type="text/x-handlebars" data-template-name="issues">
-<strong>{{remaining}}</strong> {{inflection}}
-	{{input type="text" id="new-todo" placeholder="What needs to be done?" 
-              value=newTitle action="createTodo"}}
-    <ul>
-   		<li>
-   			{{#link-to "issues"}}All{{/link-to}}
-   		</li>    		
-   		<li>
-   			{{#link-to "issues.by-client" "issues" "marriott"}}Marriott{{/link-to}}
-   		</li>   		
-   		<li>
-   			{{#link-to "issues.by-client" "issues" "yahoo"}}Yahoo{{/link-to}}
-   		</li>		
-   		<li>
-   			{{#link-to "issues.by-client" "issues" "eightshapes"}}EightShapes{{/link-to}}
-   		</li>
+	<ul>
+		<li>
+			{{#link-to "issues"}}All{{/link-to}}
+		</li>    		
+		<li>
+			{{#link-to "issues.by-client" "issues" "marriott"}}Marriott{{/link-to}}
+		</li>   		
+		<li>
+			{{#link-to "issues.by-client" "issues" "yahoo"}}Yahoo{{/link-to}}
+		</li>		
+		<li>
+			{{#link-to "issues.by-client" "issues" "eightshapes"}}EightShapes{{/link-to}}
+		</li>
 	</ul>
 
 	{{outlet}}
 </script>
 
-
 <script type="text/x-handlebars" data-template-name="issues/index">
+	<h1>{{visible}} {{inflection}}</h1>
 	<ul class="issue-list">
-		{{#each itemController="issue"}}
+		{{#each}}
 			<li {{bind-attr class=":issue-list-item state client_name"}} data-issue-id="{{id}}">
 				<h2 class="issue-list-item-title"><a href="{{html_url}}">{{title}}</a></h2>
 				<span class="issue-list-item-number">#{{number}}</span>

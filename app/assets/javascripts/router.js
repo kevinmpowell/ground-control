@@ -11,19 +11,21 @@ Houston.Router.map(function() {
 
 });
 
-Houston.IssuesRoute = Ember.Route.extend({
-	model: function() {
-		return this.store.find('issue');
-	}
-});
+// Houston.IssuesRoute = Ember.Route.extend({
+// 	model: function() {
+// 		return this.store.find('issue');
+// 	}
+// });
 
 Houston.IssuesIndexRoute = Ember.Route.extend({
 	model: function() {
-		return this.modelFor('issues');
+		return this.store.find('issue');
+		// return this.modelFor('issues');
 	}
 });
 
 Houston.IssuesByClientRoute = Ember.Route.extend({
+	controllerName: 'issues_index',
 	model: function(params){
 		return this.store.filter('issue', function(issue) {
 			if (issue.get('client_name') == params.client_name)
