@@ -10,6 +10,6 @@ Houston.Issue = DS.Model.extend({
 	closed: DS.attr('boolean'),
 	didLoad: function(){
 		var self = this;
-		setInterval(function() {self.reload()}, 5*1000); //every 5 seconds
+		// setInterval(function() {self.reload()}, 5*1000); //every 5 seconds
 	}
 });
