@@ -21,11 +21,14 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require ember-pusher.min
 //= require_self
 //= require ./houston
 
 // for more details see: http://emberjs.com/guides/application/
-Houston = Ember.Application.create();
+Houston = Ember.Application.create({
+	PUSHER_OPTS: {key: '1bd4ccfda7bf1b908b19', connection: {}, logAllEvents: true }
+});
 // Houston.ApplicationAdapter = DS.FixtureAdapter.extend();
 
 //= require_tree .
