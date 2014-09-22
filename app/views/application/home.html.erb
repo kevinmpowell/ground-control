@@ -1,11 +1,39 @@
-<h1><%= pluralize(@github_issues.count, "Issue") %></h1>
-
-<%= render 'shared/client_filter', client_names: @client_names %>
-
-<% unless @github_issues.nil? %>
-	<ul class="issue-list">
-		<% @github_issues.each do |issue| %>
-			<%= render 'shared/issue_list_item', issue: issue %>
-		<% end %>
+<script type="text/x-handlebars" data-template-name="issues">
+<strong>{{remaining}}</strong> {{inflection}}
+	{{input type="text" id="new-todo" placeholder="What needs to be done?" 
+              value=newTitle action="createTodo"}}
+    <ul>
+   		<li>
+   			{{#link-to "issues"}}All{{/link-to}}
+   		</li>    		
+   		<li>
+   			{{#link-to "issues.by-client" "issues" "marriott"}}Marriott{{/link-to}}
+   		</li>   		
+   		<li>
+   			{{#link-to "issues.by-client" "issues" "yahoo"}}Yahoo{{/link-to}}
+   		</li>		
+   		<li>
+   			{{#link-to "issues.by-client" "issues" "eightshapes"}}EightShapes{{/link-to}}
+   		</li>
 	</ul>
-<% end %>
+
+	{{outlet}}
+</script>
+
+
+<script type="text/x-handlebars" data-template-name="issues/index">
+	<ul class="issue-list">
+		{{#each itemController="issue"}}
+			<li {{bind-attr class=":issue-list-item state client_name"}} data-issue-id="{{id}}">
+				<h2 class="issue-list-item-title"><a href="{{html_url}}">{{title}}</a></h2>
+				<span class="issue-list-item-number">#{{number}}</span>
+				<!--<p>{{body}}</p>-->
+				<a href="http://github.com/{{repo_name}}">{{repo_name}}</a><br/>
+				
+				{{#if closed}}
+					<label>{{input type="checkbox" checked=archived class="toggle"}} Archive This Issue</label>
+				{{/if}}
+			</li>
+		{{/each}}
+	</ul>
+</script>

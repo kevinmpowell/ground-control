@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Houston::Application.routes.draw do
   resources :client_repos
-  resources :issues, only: [:update]
+  resources :issues, only: [:index, :show, :update]
 
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
@@ -23,5 +23,7 @@ Houston::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
    root 'application#home'
+
+   get "/*path" => "application#home"
 
 end
