@@ -9,26 +9,10 @@ Houston.Router.map(function() {
 
 });
 
-Houston.ApplicationRoute = Ember.Route.extend(EmberPusher.Bindings, {
-	PUSHER_SUBSCRIPTIONS: {
-		'kevin-powell-pusher-channel': ['github_issue_sync_count', 'github_issue_synced']
-	}
-});
-
-Houston.IssuesIndexRoute = Houston.ApplicationRoute.extend({
+Houston.IssuesIndexRoute = Ember.Route.extend({
 	actions: {
-		githubIssueSyncCount: function(data) {
-			var issues_to_be_synced = data.total_issues;
-			var issues_synchronized = 0; //reset count if syncing again
-			console.log("TO BE SYNCED: " + issues_to_be_synced);
-
-			if (data.total_issues == 0) {
-				alert("GITHUB SYNC COMPLETE");
-			}
-		},
-		githubIssueSynced: function(data) {
-			console.log("refreshing");
-		  this.refresh();
+		githubSyncComplete: function(data) {
+			this.refresh();
 		}
 	},
 	model: function() {
@@ -40,21 +24,11 @@ Houston.IssuesIndexRoute = Houston.ApplicationRoute.extend({
 	}
 });
 
-Houston.IssuesByClientRoute = Houston.ApplicationRoute.extend({
+Houston.IssuesByClientRoute = Ember.Route.extend({
 	controllerName: 'issues_index',
 	actions: {
-		githubIssueSyncCount: function(data) {
-			var issues_to_be_synced = data.total_issues;
-			var issues_synchronized = 0; //reset count if syncing again
-			console.log("TO BE SYNCED: " + issues_to_be_synced);
-
-			if (data.total_issues == 0) {
-				alert("GITHUB SYNC COMPLETE");
-			}
-		},
-		githubIssueSynced: function(data) {
-			console.log("refreshing");
-		  this.refresh();
+		githubSyncComplete: function(data) {
+			this.refresh();
 		}
 	},
 	model: function(params){
