@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
 
   # GET /issues.json
   def index
-    @issues = Issue.where({user: current_user, archived: false}).order('issues.local_sort_order ASC')
+    @issues = Issue.all
 
     render json: @issues
   end  

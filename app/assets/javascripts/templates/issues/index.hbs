@@ -1,7 +1,7 @@
 {{partial "shared/client_filter"}}
 <h1>{{visible}} {{inflection}}</h1>
 <ul class="issue-list">
-	{{#each}}
+	{{#each itemController="issue"}}
 		{{partial "shared/issue_list_item"}}
 	{{/each}}
 </ul>

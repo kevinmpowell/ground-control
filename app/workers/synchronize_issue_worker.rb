@@ -14,7 +14,6 @@ class SynchronizeIssueWorker
 		issue.number = issue_data["number"]
 		issue.title = issue_data["title"]
 		issue.body = issue_data["body"]
-		issue.assignee = issue_data["assignee"]["login"]
 		issue.labels = issue_data["labels"].to_json
 		issue.creator = issue_data["creator"]
 		issue.comment_count = issue_data["comments"]
@@ -22,7 +21,11 @@ class SynchronizeIssueWorker
 		issue.issue_updated_at = issue_data["updated_at"].to_datetime
 		issue.user_id = user_id
 
-
+		issue.assignee = nil
+		unless issue_data["assignee"].nil?
+			issue.assignee = issue_data["assignee"]["login"]
+		end
+		
 		issue_url_array = issue.url.split('/')
 		preceding_index = issue_url_array.index('repos') #API url attribute example: https://api.github.com/repos/octocat/Hello-World/issues/1347
 		# Trying to grab the section after the 'repos' part of the URL
