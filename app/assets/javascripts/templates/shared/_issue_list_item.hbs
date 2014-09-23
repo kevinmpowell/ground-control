@@ -7,4 +7,7 @@
 	{{#if closed}}
 		<button {{action "archiveIssue"}} class="btn btn-default">Archive This Issue</button>
 	{{/if}}
+	{{#each badges}}
+		<span class="badge" {{bind-attr style="css"}}>{{name}}</span>
+	{{/each}}
 </li>

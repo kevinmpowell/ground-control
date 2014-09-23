@@ -10,6 +10,7 @@ Houston.Issue = DS.Model.extend({
 	closed: DS.attr('boolean'),
 	archived: DS.attr('boolean'),
 	assignee: DS.attr('string'),
+	labels: DS.attr('string'),
 	local_sort_order: DS.attr('number'),
 	repo_url: function() {
 		return "http://github.com/" + this.get('repo_name');
