@@ -40,7 +40,3 @@ function copy_github_commit_data_to_clipboard() {
 $(document).on('keydown', null, 'ctrl+g', function() {
 	copy_github_commit_data_to_clipboard();
 });
-
-
-//= require_tree .
-
