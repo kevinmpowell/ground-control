@@ -8,8 +8,8 @@
 			current_user_id = '<%= current_user.id %>'
 		<% end %>
 	</script>
-	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= stylesheet_link_tag    "application", media: "all" %>
+	<%= javascript_include_tag "application"%>
 	<%= csrf_meta_tags %>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
@@ -31,16 +31,6 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<% if user_signed_in? %>
 	       <ul class="nav navbar-nav">
-	       	<li>
-	       		<div class="github-sync-progress">
-	       			<div class="github-sync-progress-inner">
-							       				
-	       			</div>
-	       		</div>
-	       	</li>
-	       	<li>
-	       		<a href="#link" class="js-synchronize-github-issues-for-current-user">Sync Now</a>
-	       	</li>
 	      </ul>
 
 	      <ul class="nav navbar-nav navbar-right">

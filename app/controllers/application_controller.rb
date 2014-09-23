@@ -5,10 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
 
-  def home
-    @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    @github_issues = Issue.where({user: current_user, archived: false}).order('issues.local_sort_order ASC')
-    @client_names = Issue.uniq.select(:client_name).where({user: current_user, archived: false}).map(&:client_name)
+  def ember_app
   end
 
   private

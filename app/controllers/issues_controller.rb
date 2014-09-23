@@ -2,6 +2,20 @@ class IssuesController < ApplicationController
   before_action :issue, only: [:update]
   # before_action :set_github_repositories, only: [:new, :create, :edit, :update]
 
+  # GET /issues.json
+  def index
+    @issues = Issue.all
+
+    render json: @issues
+  end  
+
+  # GET /issues.json
+  def show
+    @issue = issue
+
+    render json: @issue, root: "issue"
+  end
+
   # PUT /update_issue_sort_order.json
   def update_issue_sort_order
     sorted_issue_ids = params[:sorted_issue_ids]
