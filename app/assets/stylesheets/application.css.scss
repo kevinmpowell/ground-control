@@ -135,22 +135,16 @@ label {
 }
 
 .github-sync-progress {
-  @include background(linear-gradient(top, #efefef, #ddd));
-  @include box-shadow(inset 0 0 3px rgba(0,0,0,0.4));
-  height:40px;
-  width:200px;
-  position:relative;
-  top:4px;
+  // @include background(linear-gradient(top, #efefef, #ddd));
+  // @include box-shadow(inset 0 0 3px rgba(0,0,0,0.4));
+  // height:40px;
+  // width:200px;
+  // position:relative;
+  // top:4px;
 }
 
 .github-sync-progress-inner {
   @include transition(width 0.3s);
-  @include background(linear-gradient(top, lightblue, lighten(lightblue, 10%) 50%, lightblue 100%));
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  width:0;
 
   &:after {
     // @include transition(all 0.4s 0.4s);
@@ -163,10 +157,10 @@ label {
     right:0;
     bottom:0;
     opacity:0;
-    line-height:40px;
-    color:darken(lightblue, 30%);
+    line-height:20px;
+    color:white;
     overflow:hidden;
-    font-size:16px;
+    font-size:12px;
   }
 
   &.complete:after {
@@ -176,12 +170,125 @@ label {
   }
 }
 
+.ember-app-wrapper {
+  max-width:800px;
+  margin:0 auto;
+}
+
 .issue-list {
   list-style:none;
   padding:0;
   margin:0;
-  max-width:800px;
-  margin:0 auto;
+}
+
+.issues-count {
+  display:inline-block;
+  width:50%;
+  margin-right:-3px;
+}
+
+.client-filter-wrapper {
+  display:inline-block;
+  text-align:right;
+  width:50%;
+  margin-right:-3px;
+  margin-bottom:10px;
+}
+
+.client-filter-label {
+  display:inline-block;
+}
+
+.client-filter {
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:inline-block;
+
+  li {
+    padding:0;
+    display:inline-block;
+  }
+
+  a {
+    display:block;
+    background:#efefef;
+    padding:5px 10px;
+
+    &.active {
+      background:$link-color;
+      color:white;
+    }
+  }
+}
+
+@-webkit-keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.github-sync-wrapper {
+  position:relative;
+  width:240px;
+  
+  .github-sync-btn {
+    @include border-radius(0 4px 4px 0);
+    position:absolute;
+    right:0;
+    top:0;
+    width:20px;
+    height:20px;
+    padding:0;
+    text-indent:-10000px;
+
+    &:active {
+      border:none;
+      outline:none;
+    }
+
+    .sync-icon {
+      position:absolute;
+      text-indent:0;
+      top:2px;
+      left:2px;
+
+      &.syncing {
+        @include animation(infinite-spinning 1s infinite);
+      }
+    }
+  }
 }
 
 .issue-list-item {

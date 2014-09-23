@@ -1,9 +1,7 @@
 <script type="text/x-handlebars">
-	<div class="github-sync-progress">
-		<div {{bind-attr style="progress_bar_width"}} {{bind-attr class=":github-sync-progress-inner github_sync_complete:complete"}}>
-			       				
-		</div>
-	</div>
-	<button {{action "syncGithubIssues"}} class="btn btn-default">Sync Now</button>
+<div class="ember-app-wrapper">
+	{{partial 'shared/progress_bar'}}
+
 	{{outlet}}
+</div>
 </script>
