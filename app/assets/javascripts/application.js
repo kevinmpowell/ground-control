@@ -30,7 +30,17 @@ Houston = Ember.Application.create({
 	rootElement: "body",
 	PUSHER_OPTS: {key: '1bd4ccfda7bf1b908b19', connection: {}, logAllEvents: true }
 });
-// Houston.ApplicationAdapter = DS.FixtureAdapter.extend();
+
+function copy_github_commit_data_to_clipboard() {
+	var issue_url = $(".issue-list-item:visible:first").find(".issue-list-item-title a").attr("href");
+	var github_commit_string = 'git commit -m "[amends ' + issue_url + '] ';
+	window.prompt("Copy to clipboard: Ctrl+C, Enter", github_commit_string);
+}
+
+$(document).on('keydown', null, 'ctrl+g', function() {
+	copy_github_commit_data_to_clipboard();
+});
+
 
 //= require_tree .
 
