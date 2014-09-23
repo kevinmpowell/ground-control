@@ -27,6 +27,7 @@
 
 // for more details see: http://emberjs.com/guides/application/
 Houston = Ember.Application.create({
+	rootElement: "body",
 	PUSHER_OPTS: {key: '1bd4ccfda7bf1b908b19', connection: {}, logAllEvents: true }
 });
 // Houston.ApplicationAdapter = DS.FixtureAdapter.extend();

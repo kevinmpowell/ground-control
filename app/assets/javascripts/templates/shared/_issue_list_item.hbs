@@ -1,4 +1,4 @@
-<li {{bind-attr class=":issue-list-item state client_name"}} data-issue-id="{{id}}">
+<li {{bind-attr class=":issue-list-item state client_name"}} {{bind-attr data-issue-id="id"}}>
 	<h2 class="issue-list-item-title"><a {{bind-attr href="html_url"}}>{{title}} {{id}}</a></h2>
 	<span class="issue-list-item-number">#{{number}}</span>
 	<!--<p>{{body}}</p>-->

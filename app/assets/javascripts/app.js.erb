@@ -1,255 +1,255 @@
-Pusher.log = function(message) {
-  if (window.console && window.console.log) {
-    window.console.log(message);
-  }
-};
+// Pusher.log = function(message) {
+//   if (window.console && window.console.log) {
+//     window.console.log(message);
+//   }
+// };
 
-var HoustonApp = function() {
-	function copy_github_commit_data_to_clipboard() {
-		var issue_url = $(".issue-list-item:visible:first").find(".issue-list-item-title a").attr("href");
-		var github_commit_string = 'git commit -m "[amends ' + issue_url + '] ';
-		window.prompt("Copy to clipboard: Ctrl+C, Enter", github_commit_string);
-	}
+// var HoustonApp = function() {
+// 	function copy_github_commit_data_to_clipboard() {
+// 		var issue_url = $(".issue-list-item:visible:first").find(".issue-list-item-title a").attr("href");
+// 		var github_commit_string = 'git commit -m "[amends ' + issue_url + '] ';
+// 		window.prompt("Copy to clipboard: Ctrl+C, Enter", github_commit_string);
+// 	}
 
-	function bind_listeners() {
-		$(document).on("copy-github-commit-data-to-clipboard", function() {
-			copy_github_commit_data_to_clipboard();
-		});
-	}
+// 	function bind_listeners() {
+// 		$(document).on("copy-github-commit-data-to-clipboard", function() {
+// 			copy_github_commit_data_to_clipboard();
+// 		});
+// 	}
 
-	function bind_event_handlers() {
-		$(document).on('keydown', null, 'ctrl+g', function() {
-			$(document).trigger("copy-github-commit-data-to-clipboard");
-		});
-	}
+// 	function bind_event_handlers() {
+// 		$(document).on('keydown', null, 'ctrl+g', function() {
+// 			$(document).trigger("copy-github-commit-data-to-clipboard");
+// 		});
+// 	}
 
-	function init() {
-		bind_event_handlers();
-		bind_listeners();
-	}
+// 	function init() {
+// 		bind_event_handlers();
+// 		bind_listeners();
+// 	}
 
-	init();
-}
+// 	init();
+// }
 
-var GithubSyncMonitor = function(websockets_channel){
-	var issues_to_be_synced = 0;
-	var issues_synchronized = 0;
-	var $progress_bar = $(".github-sync-progress-inner");
+// var GithubSyncMonitor = function(websockets_channel){
+// 	var issues_to_be_synced = 0;
+// 	var issues_synchronized = 0;
+// 	var $progress_bar = $(".github-sync-progress-inner");
 
-	function update_progress_bar_width(){
-		var width = (issues_synchronized / issues_to_be_synced) * 100;
-		$progress_bar.css({"width":width+"%"});
-	}
+// 	function update_progress_bar_width(){
+// 		var width = (issues_synchronized / issues_to_be_synced) * 100;
+// 		$progress_bar.css({"width":width+"%"});
+// 	}
 
-	function set_progress_bar_state(args) {
-		if (args.hasOwnProperty("state") && args.state == "complete"){
-			$progress_bar.css({"width":"100%"}).addClass("complete");
-		}
-		else {
-			$progress_bar.removeClass("complete");
-		}
-	}
+// 	function set_progress_bar_state(args) {
+// 		if (args.hasOwnProperty("state") && args.state == "complete"){
+// 			$progress_bar.css({"width":"100%"}).addClass("complete");
+// 		}
+// 		else {
+// 			$progress_bar.removeClass("complete");
+// 		}
+// 	}
 
-	function update_github_issue_sync_count(data){
-		issues_to_be_synced = data.total_issues;
-		issues_synchronized = 0; //reset count if syncing again
-		console.log("TO BE SYNCED: " + issues_to_be_synced);
+// 	function update_github_issue_sync_count(data){
+// 		issues_to_be_synced = data.total_issues;
+// 		issues_synchronized = 0; //reset count if syncing again
+// 		console.log("TO BE SYNCED: " + issues_to_be_synced);
 
 
-		if (data.total_issues == 0) {
-			$(document).trigger("github-issue-sync-complete");
-		}
-	}
+// 		if (data.total_issues == 0) {
+// 			$(document).trigger("github-issue-sync-complete");
+// 		}
+// 	}
 
-	function update_github_issues_synced(data) {
-		console.log(data.issue_title + " - Synced");
-		issues_synchronized++;
-		console.log("ISSUES SYNCHRONIZED: " + issues_synchronized);
-		if (issues_synchronized == issues_to_be_synced){
-			$(document).trigger("github-issue-sync-complete");
-		}
-		update_progress_bar_width();
-	}
+// 	function update_github_issues_synced(data) {
+// 		console.log(data.issue_title + " - Synced");
+// 		issues_synchronized++;
+// 		console.log("ISSUES SYNCHRONIZED: " + issues_synchronized);
+// 		if (issues_synchronized == issues_to_be_synced){
+// 			$(document).trigger("github-issue-sync-complete");
+// 		}
+// 		update_progress_bar_width();
+// 	}
 
-	function bind_websockets_events(){
-		websockets_channel.bind('github_issue_sync_count', function(data) {
-			update_github_issue_sync_count(data);
-			set_progress_bar_state("reset");
-			update_progress_bar_width();
-		});
+// 	function bind_websockets_events(){
+// 		websockets_channel.bind('github_issue_sync_count', function(data) {
+// 			update_github_issue_sync_count(data);
+// 			set_progress_bar_state("reset");
+// 			update_progress_bar_width();
+// 		});
 
-		websockets_channel.bind('github_issue_synced', function(data) {
-		  update_github_issues_synced(data);
-		});
-	}
+// 		websockets_channel.bind('github_issue_synced', function(data) {
+// 		  update_github_issues_synced(data);
+// 		});
+// 	}
 
-	function initiate_github_sync_for_current_user() {
-		$.ajax({
-			url:'synchronize-github-issues-for-user/' + current_user_id,
-			type: 'PUT'
-		});
-	}
+// 	function initiate_github_sync_for_current_user() {
+// 		$.ajax({
+// 			url:'synchronize-github-issues-for-user/' + current_user_id,
+// 			type: 'PUT'
+// 		});
+// 	}
 
-	function bind_listeners(){
-		$(document).on("github-issue-sync-complete", function(){
-			set_progress_bar_state({"state": "complete"});
-		});
+// 	function bind_listeners(){
+// 		$(document).on("github-issue-sync-complete", function(){
+// 			set_progress_bar_state({"state": "complete"});
+// 		});
 
-		$(document).on("synchronize-github-issues-for-current-user", function(){
-			initiate_github_sync_for_current_user();
-		});
-	}
+// 		$(document).on("synchronize-github-issues-for-current-user", function(){
+// 			initiate_github_sync_for_current_user();
+// 		});
+// 	}
 
-	function bind_event_handlers() {
-		$(document).on("click", ".js-synchronize-github-issues-for-current-user", function(e){
-			e.preventDefault();
-			$(document).trigger("synchronize-github-issues-for-current-user");
-		});
-	}
+// 	function bind_event_handlers() {
+// 		$(document).on("click", ".js-synchronize-github-issues-for-current-user", function(e){
+// 			e.preventDefault();
+// 			$(document).trigger("synchronize-github-issues-for-current-user");
+// 		});
+// 	}
 
-	function init() {
-		bind_event_handlers();
-		bind_listeners();
-		bind_websockets_events();
-		// initiate_github_sync_for_current_user();
-	}
+// 	function init() {
+// 		bind_event_handlers();
+// 		bind_listeners();
+// 		bind_websockets_events();
+// 		// initiate_github_sync_for_current_user();
+// 	}
 
-	init();
-}
+// 	init();
+// }
 
-var GithubIssueList = function() {
-	var $issue_list = $(".issue-list");
+// var GithubIssueList = function() {
+// 	var $issue_list = $(".issue-list");
 
-	function update_issue_sort_order(sorted_issue_ids) {
-		$.ajax({
-			url:'update-issue-sort-order.json',
-			data: {
-				sorted_issue_ids: sorted_issue_ids
-			},
-			dataType:'html',
-			type: 'PUT',
-			success: function(){
-				// DO NOTHING
-				// alert("SORTED!");
-			},
-			error: function(a, b, c){
-				console.log(a);
-				console.log(b);
-				console.log(c);
-				alert("An error occurred while saving the sort order");
-			}
-		});
-	}
+// 	function update_issue_sort_order(sorted_issue_ids) {
+// 		$.ajax({
+// 			url:'update-issue-sort-order.json',
+// 			data: {
+// 				sorted_issue_ids: sorted_issue_ids
+// 			},
+// 			dataType:'html',
+// 			type: 'PUT',
+// 			success: function(){
+// 				// DO NOTHING
+// 				// alert("SORTED!");
+// 			},
+// 			error: function(a, b, c){
+// 				console.log(a);
+// 				console.log(b);
+// 				console.log(c);
+// 				alert("An error occurred while saving the sort order");
+// 			}
+// 		});
+// 	}
 
-	function make_sortable() {
-		$issue_list.sortable({
-			axis: "y",
-			stop: function(event, ui) {
-				var sorted_issue_ids = $issue_list.sortable("toArray", {attribute:"data-issue-id"});
-				update_issue_sort_order(sorted_issue_ids);
-			}
-		});
-	}
+// 	function make_sortable() {
+// 		$issue_list.sortable({
+// 			axis: "y",
+// 			stop: function(event, ui) {
+// 				var sorted_issue_ids = $issue_list.sortable("toArray", {attribute:"data-issue-id"});
+// 				update_issue_sort_order(sorted_issue_ids);
+// 			}
+// 		});
+// 	}
 
-	function filter_by_client(params) {
-		var $target = $(params.target);
-		var client_name = $target.val();
+// 	function filter_by_client(params) {
+// 		var $target = $(params.target);
+// 		var client_name = $target.val();
 
-		var client_names = params.client_names;
-		for (var index in client_names) {
-			$issue_list.removeClass("client-filter-" + client_names[index]);
-		}
+// 		var client_names = params.client_names;
+// 		for (var index in client_names) {
+// 			$issue_list.removeClass("client-filter-" + client_names[index]);
+// 		}
 
-		$issue_list.addClass("client-filter-" + client_name);
-	}
+// 		$issue_list.addClass("client-filter-" + client_name);
+// 	}
 
-	function archive_issue(params) {
-		var $target = $(params.target);
-		var $list_item = $target.closest(".issue-list-item");
-		var proceed = confirm("Are you sure you want to archive this issue?");
-		if (proceed == true) {
-			var url = $target.attr("href");
-			$.ajax({
-				url:url,
-				data: {
-					issue: {
-						archived: true
-					}
-				},
-				dataType:'html',
-				type: 'PUT',
-				success: function(){
-					$list_item.addClass("archived");
-				},
-				error: function(a, b, c){
-					console.log(a);
-					console.log(b);
-					console.log(c);
-					alert("An error occurred while archiving the issue");
-				}
-			});
-		}
-	}
+// 	function archive_issue(params) {
+// 		var $target = $(params.target);
+// 		var $list_item = $target.closest(".issue-list-item");
+// 		var proceed = confirm("Are you sure you want to archive this issue?");
+// 		if (proceed == true) {
+// 			var url = $target.attr("href");
+// 			$.ajax({
+// 				url:url,
+// 				data: {
+// 					issue: {
+// 						archived: true
+// 					}
+// 				},
+// 				dataType:'html',
+// 				type: 'PUT',
+// 				success: function(){
+// 					$list_item.addClass("archived");
+// 				},
+// 				error: function(a, b, c){
+// 					console.log(a);
+// 					console.log(b);
+// 					console.log(c);
+// 					alert("An error occurred while archiving the issue");
+// 				}
+// 			});
+// 		}
+// 	}
 
-	function bind_listeners() {
-		$(document).on("filter-by-client", function(e, params) {
-			filter_by_client(params);
-		});
+// 	function bind_listeners() {
+// 		$(document).on("filter-by-client", function(e, params) {
+// 			filter_by_client(params);
+// 		});
 
-		$(document).on("archive-issue-requested", function(e, params) {
-			archive_issue(params);
-		});
-	}
+// 		$(document).on("archive-issue-requested", function(e, params) {
+// 			archive_issue(params);
+// 		});
+// 	}
 
-	function bind_event_handlers() {
-		$(document).on("click", ".js-archive-issue", function(e) {
-			e.preventDefault();
-			$(document).trigger("archive-issue-requested", {target: e.target});
-		});
-	}
+// 	function bind_event_handlers() {
+// 		$(document).on("click", ".js-archive-issue", function(e) {
+// 			e.preventDefault();
+// 			$(document).trigger("archive-issue-requested", {target: e.target});
+// 		});
+// 	}
 
-	function init() {
-		make_sortable();
-		bind_event_handlers();
-		bind_listeners();
-	}
+// 	function init() {
+// 		make_sortable();
+// 		bind_event_handlers();
+// 		bind_listeners();
+// 	}
 
-	init();
-}
+// 	init();
+// }
 
-var GithubIssueFilter = function() {
-	var client_names = [];
+// var GithubIssueFilter = function() {
+// 	var client_names = [];
 
-	function set_client_names() {
-		$(".js-filter-by-client").each(function(){
-			client_names.push($(this).val());
-		});
-	}
+// 	function set_client_names() {
+// 		$(".js-filter-by-client").each(function(){
+// 			client_names.push($(this).val());
+// 		});
+// 	}
 
-	function bind_event_handlers() {
-		$(document).on("change", ".js-filter-by-client", function(e) {
-			$(document).trigger($(e.target).data("event"), {target: e.target, client_names: client_names});
-		});
-	}
+// 	function bind_event_handlers() {
+// 		$(document).on("change", ".js-filter-by-client", function(e) {
+// 			$(document).trigger($(e.target).data("event"), {target: e.target, client_names: client_names});
+// 		});
+// 	}
 
-	function init() {
-		set_client_names();
-		bind_event_handlers();
-	}
-	init();
-}
+// 	function init() {
+// 		set_client_names();
+// 		bind_event_handlers();
+// 	}
+// 	init();
+// }
 
-$(document).ready(function(){
-	if (typeof current_user_pusher_channel !== undefined) {
-		var pusher = new Pusher("<%= ENV['PUSHER_CLIENT_KEY']%>");
-		var channel = pusher.subscribe(current_user_pusher_channel);
+// $(document).ready(function(){
+// 	if (typeof current_user_pusher_channel !== undefined) {
+// 		var pusher = new Pusher("<%= ENV['PUSHER_CLIENT_KEY']%>");
+// 		var channel = pusher.subscribe(current_user_pusher_channel);
 
-		channel.bind('pusher:subscription_succeeded', function(){
-			GithubSyncMonitor = new GithubSyncMonitor(channel);
-			GithubIssueList = new GithubIssueList();
-			GithubIssueFilter = new GithubIssueFilter();
-			HoustonApp = new HoustonApp();
-		});
-	}
+// 		channel.bind('pusher:subscription_succeeded', function(){
+// 			GithubSyncMonitor = new GithubSyncMonitor(channel);
+// 			GithubIssueList = new GithubIssueList();
+// 			GithubIssueFilter = new GithubIssueFilter();
+// 			HoustonApp = new HoustonApp();
+// 		});
+// 	}
 
-})
+// })
