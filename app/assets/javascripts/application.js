@@ -23,10 +23,10 @@
 //= require ember-data
 //= require ember-pusher.min
 //= require_self
-//= require ./houston
+//= require ./ground-control
 
 // for more details see: http://emberjs.com/guides/application/
-Houston = Ember.Application.create({
+GroundControl = Ember.Application.create({
 	rootElement: "body",
 	PUSHER_OPTS: {key: '1bd4ccfda7bf1b908b19', connection: {}, logAllEvents: true }
 });

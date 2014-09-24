@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-Houston::Application.routes.draw do
+GroundControl::Application.routes.draw do
   resources :client_repos
   resources :issues, only: [:index, :show, :update]
 

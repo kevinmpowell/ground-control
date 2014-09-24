@@ -1,4 +1,4 @@
-Houston.IssuesIndexView = Ember.View.extend({
+GroundControl.IssuesIndexView = Ember.View.extend({
 	didInsertElement: function() {
 		var controller = this.get('controller');
 		this.$(".issue-list").sortable({
