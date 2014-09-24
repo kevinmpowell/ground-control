@@ -3,6 +3,7 @@ require 'sidekiq/web'
 GroundControl::Application.routes.draw do
   resources :client_repos
   resources :issues, only: [:index, :show, :update]
+  resources :users, only: [:show]
 
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
