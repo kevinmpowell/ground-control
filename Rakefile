@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Houston::Application.load_tasks
+GroundControl::Application.load_tasks

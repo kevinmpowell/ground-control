@@ -1,15 +1,15 @@
-Houston.Router.reopen({
+GroundControl.Router.reopen({
 	location: 'auto'
 });
 
-Houston.Router.map(function() {
+GroundControl.Router.map(function() {
 	this.resource('issues', { path: '/'}, function () {
 		this.route('by-client', {path: ':slug/client/:client_name'});
 	});
 
 });
 
-Houston.IssuesIndexRoute = Ember.Route.extend({
+GroundControl.IssuesIndexRoute = Ember.Route.extend({
 	actions: {
 		githubSyncComplete: function(data) {
 			this.refresh();
@@ -24,7 +24,7 @@ Houston.IssuesIndexRoute = Ember.Route.extend({
 	}
 });
 
-Houston.IssuesByClientRoute = Ember.Route.extend({
+GroundControl.IssuesByClientRoute = Ember.Route.extend({
 	controllerName: 'issues_index',
 	actions: {
 		githubSyncComplete: function(data) {

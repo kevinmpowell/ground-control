@@ -1,4 +1,4 @@
-Houston.ApplicationController = Ember.ObjectController.extend(EmberPusher.Bindings, {
+GroundControl.ApplicationController = Ember.ObjectController.extend(EmberPusher.Bindings, {
 	needs: "issuesIndex",
 	PUSHER_SUBSCRIPTIONS: {
 		'kevin-powell-pusher-channel': ['github_issue_sync_count', 'github_issue_synced']

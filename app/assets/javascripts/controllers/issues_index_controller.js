@@ -1,4 +1,4 @@
-Houston.IssuesIndexController = Ember.ArrayController.extend({
+GroundControl.IssuesIndexController = Ember.ArrayController.extend({
   sortProperties: ['local_sort_order'],
   sortAscending: true,
   visible: function() {

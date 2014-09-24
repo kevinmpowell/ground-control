@@ -1,4 +1,4 @@
-Houston.Issue = DS.Model.extend({
+GroundControl.Issue = DS.Model.extend({
 	url: DS.attr('string'),
 	title: DS.attr('string'),
 	body: DS.attr('string'),
