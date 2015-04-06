@@ -19,13 +19,15 @@
 //= require pusher.min
 //= require jquery
 //= require angular/angular
+//= require moment/moment
+//= require angular-moment/angular-moment
 //= require pusher-angular.min
 //= require_self
 
 // for more details see: http://emberjs.com/guides/application/
 (function(){
 	window.client = new Pusher('1bd4ccfda7bf1b908b19');
-	var app = angular.module("groundControl", ['pusher-angular']);
+	var app = angular.module("groundControl", ['pusher-angular', 'angularMoment']);
 
 	app.filter('unique', function() {
 	    return function(input, key) {

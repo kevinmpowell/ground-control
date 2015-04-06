@@ -1,4 +1,5 @@
 $headings-color:black;
+$grid-float-breakpoint:480px;
 // $table-bg: white;
 // $body-bg: #383838;
 
@@ -162,9 +163,9 @@ label {
   }
 }
 
-.ember-app-wrapper {
-  max-width:800px;
-  margin:0 auto;
+.repo-link {
+  display: inline-block;
+  margin-right: 20px;
 }
 
 .issue-list {
@@ -175,14 +176,14 @@ label {
 
 .issues-count {
   display:inline-block;
-  width:50%;
+  width:30%;
   margin-right:-3px;
 }
 
 .client-filter-wrapper {
   display:inline-block;
   text-align:right;
-  width:50%;
+  width:70%;
   margin-right:-3px;
   margin-bottom:10px;
 }
