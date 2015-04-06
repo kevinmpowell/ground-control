@@ -1,0 +1,12 @@
+<h1>{{app.name}}</h1>
+<ul class="issue-list" ng-controller="IssuesController as issuesCtrl">
+	<li ng-repeat="issue in issuesCtrl.issues" ng-class="[issue.state, issue.client_name, 'issue-list-item']" ng-attr-data-issue-id="{{issue.id}}">
+		<h2 class="issue-list-item-title"><a ng-href="{{issue.html_url}}">{{issue.title}}</a></h2>
+		<span class="issue-list-item-number">#{{issue.number}}</span>
+		<a ng-href="{{'http://github.com/' + issue.repo_name}}">{{issue.repo_name}}</a><br/>
+		<button ng-show="issue.closed" ng-click="archive_issue(issue.id)" class="btn btn-default">Archive This Issue</button>
+		<span class="issue-labels">
+			<span ng-repeat="label in issue.labels" class="badge" ng-style="{'background-color':'#{{label.color}}', 'color':'{{label.text_color}}'}">{{label.name}}</span>
+		</span>
+	</li>
+</ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="groundControl">
 <head>
 	<title>Ground Control</title>
 	<script>
@@ -13,7 +13,7 @@
 	<%= csrf_meta_tags %>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
-<body>
+<body ng-controller="AppController as app">
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->

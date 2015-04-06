@@ -18,18 +18,56 @@
 //= require bootstrap
 //= require pusher.min
 //= require jquery
-//= require handlebars
-//= require ember
-//= require ember-data
-//= require ember-pusher.min
+//= require angular/angular
 //= require_self
-//= require ./ground-control
 
 // for more details see: http://emberjs.com/guides/application/
-GroundControl = Ember.Application.create({
-	rootElement: "body",
-	PUSHER_OPTS: {key: '1bd4ccfda7bf1b908b19', connection: {}, logAllEvents: true }
-});
+(function(){
+	var app = angular.module("groundControl", [ ]);
+
+	app.controller("AppController", function(){
+		this.name = "Ground Control";
+	});
+
+	app.controller("IssuesController", ['$http', '$filter', '$scope', function($http, $filter, $scope){
+		this.issues = [];
+		var issuesController = this;
+
+		this.load_active_issues = function(){
+			$http.get('/issues.json').success(function(data){
+				var issues = $filter('filter')(data, function(issue, index){
+					return issue.archived === false;
+				});
+				issues = $filter('orderBy')(issues, 'local_sort_order');
+				issuesController.issues = issues;
+			}).error(function(a,b,c){
+				alert("an error occurred");
+			});
+		};
+
+		this.update_sort_order = function(sorted_issue_ids){
+			$http.put('/update-issue-sort-order.json', {sorted_issue_ids: sorted_issue_ids}).success(function(){
+				issuesController.load_active_issues();
+			});
+		}
+
+		$scope.archive_issue = function(issue_id){
+			$http.put('/issues/' + issue_id + '.json', {archived: true}).success(function(data){
+				issuesController.load_active_issues();
+			});
+		}
+
+		$(".issue-list").sortable({
+			axis: "y",
+			stop: function(event, ui) {
+				var sorted_issue_ids = $(".issue-list").sortable("toArray", {attribute:"data-issue-id"});
+				issuesController.update_sort_order(sorted_issue_ids);
+			}
+		});
+
+		this.load_active_issues();
+	}]);
+})();
 
 function copy_github_commit_data_to_clipboard() {
 	var issue_url = $(".issue-list-item:visible:first").find(".issue-list-item-title a").attr("href");

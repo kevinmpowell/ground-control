@@ -22,8 +22,8 @@ GroundControl::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'application#ember_app'
+   root 'application#angular_app'
 
-   get "/*path" => "application#ember_app"
+   get "/*path" => "application#angular_app"
 
 end

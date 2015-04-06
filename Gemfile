@@ -45,9 +45,8 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'pusher'
 gem 'redcarpet'
 gem 'jquery-ui-rails'
+gem 'bower-rails'
 gem 'color'
-gem 'ember-rails'
-gem 'ember-source', '1.7.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -93,4 +92,4 @@ gem 'unicorn'
 gem 'devise'
 gem "github_api"
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store' #prevent cookie overflow errors
-ruby "2.0.0"
+ruby "2.2.0"

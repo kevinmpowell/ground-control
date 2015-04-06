@@ -6,7 +6,6 @@ GroundControl.Router.map(function() {
 	this.resource('issues', { path: '/'}, function () {
 		this.route('by-client', {path: ':slug/client/:client_name'});
 	});
-
 });
 
 GroundControl.IssuesIndexRoute = Ember.Route.extend({
