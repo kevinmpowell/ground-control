@@ -23,6 +23,8 @@ module GroundControl
     config.autoload_paths += %W(#{config.root}/services)
     config.action_mailer.delivery_method   = :postmark
     config.action_mailer.postmark_settings = { :api_key => ENV['POSTMARK_API_KEY'] }
+    config.assets.paths << Rails.root.join("vendor", "assets", "bower_components")
+    config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)
 
     config.generators do |g|
       g.test_framework :rspec
