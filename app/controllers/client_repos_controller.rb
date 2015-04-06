@@ -6,7 +6,12 @@ class ClientReposController < ApplicationController
   # GET /client_repos.json
   def index
     @client_repos = ClientRepo.all
-  end
+
+    respond_to do |format|
+      format.json { render json: @client_repos }
+      format.html { render action: 'index' }
+    end
+  end  
 
   # GET /client_repos/1
   # GET /client_repos/1.json

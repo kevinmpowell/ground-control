@@ -21,26 +21,25 @@ class User < ActiveRecord::Base
 
     if ENV['AUTHORIZED_GITHUB_USERNAME'] == auth.info.nickname
       email = self.get_organization_email_address(github)
-      user = where(auth.slice(:provider, :uid)).first
-      user = user.nil? ? new : user
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.email = email
-      user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name.empty? ? auth.info.nickname : auth.info.name   # assuming the user model has a name
-      user.image = auth.info.image # assuming the user model has an image
-      user.github_username = auth.info.nickname
-      user.auth_token = auth.credentials.token
-      # user.admin = false
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.email = email
+        user.password = Devise.friendly_token[0,20]
+        user.name = auth.info.name.empty? ? auth.info.nickname : auth.info.name   # assuming the user model has a name
+        user.image = auth.info.image # assuming the user model has an image
+        user.github_username = auth.info.nickname
+        user.auth_token = auth.credentials.token
+        # user.admin = false
 
-      # TODO: Tie admin access to some team in the EightShapes github org
-      # if github.orgs.teams.team_member? 'EightShapes/teams/owners', auth.info.nickname
-      #   user.admin = true
-      # end
-      
-      user.save
+        # TODO: Tie admin access to some team in the EightShapes github org
+        # if github.orgs.teams.team_member? 'EightShapes/teams/owners', auth.info.nickname
+        #   user.admin = true
+        # end
+        
+        user.save
+      end
     end
-    user.nil? ? new : user #If the user is not allowed to access the app and an account can't be created, pass an empty user instance back to Devise
   end
 
   def self.get_organization_email_address github

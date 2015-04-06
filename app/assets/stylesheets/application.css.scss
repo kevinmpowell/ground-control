@@ -2,6 +2,7 @@ $headings-color:black;
 // $table-bg: white;
 // $body-bg: #383838;
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap/theme";
 @import "font-awesome";
@@ -126,21 +127,12 @@ label {
   }
 }
 
-@media (min-width: $screen-md-min) {
-
-}
-
-@media (min-width: $screen-lg-min) {
-
+.github-sync-wrapper {
+  margin-top: 15px;
 }
 
 .github-sync-progress {
-  // @include background(linear-gradient(top, #efefef, #ddd));
-  // @include box-shadow(inset 0 0 3px rgba(0,0,0,0.4));
-  // height:40px;
-  // width:200px;
-  // position:relative;
-  // top:4px;
+  margin-bottom: 0;
 }
 
 .github-sync-progress-inner {
@@ -218,6 +210,7 @@ label {
     background:#efefef;
     padding:5px 10px;
     font-size: 14px;
+    text-transform: capitalize;
 
     &.active {
       background:$link-color;
@@ -225,43 +218,6 @@ label {
     }
   }
 }
-
-@-webkit-keyframes infinite-spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes infinite-spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@-o-keyframes infinite-spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes infinite-spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 
 .github-sync-wrapper {
   position:relative;
@@ -287,10 +243,6 @@ label {
       text-indent:0;
       top:2px;
       left:2px;
-
-      &.syncing {
-        @include animation(infinite-spinning 1s infinite);
-      }
     }
   }
 }
