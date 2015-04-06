@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
 
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.where({assignee: current_user.github_username})
 
     render json: @issues
   end  
