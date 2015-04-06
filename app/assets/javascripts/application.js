@@ -46,6 +46,30 @@
 	app.controller("IssuesController", ['$http', '$filter', '$scope', function($http, $filter, $scope){
 		var issuesController = this;
 		this.issues = [];
+		this.filtered_issues = [];
+		this.active_client = "all";
+
+		this.client_active = function(client_name) {
+			return this.active_client === client_name;
+		}
+
+		this.filter_issues_by_client = function(client_name) {
+			this.active_client = client_name;
+			this.apply_client_filter();
+		}
+
+		this.apply_client_filter = function() {
+			if (this.active_client === "all") {
+				this.filtered_issues = this.issues;
+			}
+			else {
+				this.filtered_issues = $filter('filter')(this.issues, {client_name: this.active_client})
+			}
+		}
+
+		this.update_visible_issues_count = function(){
+			this.visible_issues_count = $(".issue-list-item:visible").length;
+		}
 
 		this.load_active_issues = function(){
 			$http.get('/issues.json').success(function(data){
@@ -54,6 +78,7 @@
 				});
 				issues = $filter('orderBy')(issues, 'local_sort_order');
 				issuesController.issues = issues;
+				issuesController.apply_client_filter();
 			}).error(function(a,b,c){
 				alert("an error occurred");
 			});

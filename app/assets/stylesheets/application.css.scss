@@ -203,17 +203,21 @@ label {
   margin:0;
   padding:0;
   list-style:none;
+  font-size: 0;
   display:inline-block;
 
   li {
     padding:0;
     display:inline-block;
+    font-size: 0;
+    margin-right: 5px;
   }
 
   a {
     display:block;
     background:#efefef;
     padding:5px 10px;
+    font-size: 14px;
 
     &.active {
       background:$link-color;
@@ -363,34 +367,14 @@ label {
   }
 }
 
-.client-filter-eightshapes {
-  .yahoo,
-  .marriott {
-    display:none;
-  }
-}
-
-.client-filter-yahoo {
-  .eightshapes,
-  .marriott {
-    display:none;
-  }
-}
-
-.client-filter-marriott {
-  .eightshapes,
-  .yahoo {
-    display:none;
-  }
-}
-
 .issue-labels {
   display:block;
   background:#efefef;
-  padding:10px 20px;
+  padding:10px 80px 10px 20px;
   margin:10px -20px -10px;
 
-  .badge{
+  .badge {
     border:solid 1px darken(#efefef, 20%);
+    margin-right: 5px;
   }
 }
