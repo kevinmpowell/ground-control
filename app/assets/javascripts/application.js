@@ -25,13 +25,27 @@
 (function(){
 	var app = angular.module("groundControl", [ ]);
 
+	app.filter('unique', function() {
+	    return function(input, key) {
+	        var unique = {};
+	        var uniqueList = [];
+	        for(var i = 0; i < input.length; i++){
+	            if(typeof unique[input[i][key]] == "undefined"){
+	                unique[input[i][key]] = "";
+	                uniqueList.push(input[i]);
+	            }
+	        }
+	        return uniqueList;
+	    };
+	});
+
 	app.controller("AppController", function(){
 		this.name = "Ground Control";
 	});
 
 	app.controller("IssuesController", ['$http', '$filter', '$scope', function($http, $filter, $scope){
-		this.issues = [];
 		var issuesController = this;
+		this.issues = [];
 
 		this.load_active_issues = function(){
 			$http.get('/issues.json').success(function(data){
@@ -66,6 +80,20 @@
 		});
 
 		this.load_active_issues();
+	}]);
+
+	app.controller("ClientReposController", ['$http', '$filter', function($http, $filter){
+		var clientReposController = this;
+		this.client_names = [];
+
+		this.load_client_names = function(){
+			$http.get('/client_repos.json').success(function(data){
+				var client_names = $filter('unique')(data, 'client_name');
+				clientReposController.client_names = client_names;
+			});
+		}
+
+		this.load_client_names();
 	}]);
 })();
 
