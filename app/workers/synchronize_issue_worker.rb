@@ -5,6 +5,7 @@ class SynchronizeIssueWorker
   	user = User.find(user_id)
   	auth_token = user.auth_token
   	issue = Issue.find_or_initialize_by(url: github_issue_url, user_id: user_id)
+  	github_sync = GithubSync.find_or_create_by({complete: false, user_id: user_id})
   	
   	begin
 	  	issue_data = GithubService.get_issue_data_via_url(github_issue_url, auth_token)

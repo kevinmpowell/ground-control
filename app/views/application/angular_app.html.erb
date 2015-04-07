@@ -16,7 +16,7 @@
 			<span class="issue-list-item-number">#{{issue.number}}</span>
 			<a class="repo-link" ng-href="{{'http://github.com/' + issue.repo_name}}">{{issue.repo_name}}</a>
 			<small class="text-muted" ng-show="issue.milestone_name">{{issue.milestone_name}} <span ng-show="issue.milestone_due_on">due in {{issue.milestone_due_on | amDifference : null : 'days'}} days</span></small>
-			<button ng-show="issue.closed" ng-click="archive_issue(issue.id)" class="btn btn-default">Archive This Issue</button>
+			<button ng-show="issue.closed" ng-click="archive_issue(issue.id)" class="btn btn-default archive-btn">Archive This Issue</button>
 			<span class="issue-labels">
 				<span ng-repeat="label in issue.labels" class="badge" ng-style="{'background-color':'#{{label.color}}', 'color':'{{label.text_color}}'}">{{label.name}}</span>
 			</span>

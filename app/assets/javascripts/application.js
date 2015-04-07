@@ -51,6 +51,7 @@
 		this.progress_bar_width = "0";
 		this.github_sync_complete = false;
 		this.github_syncing = false;
+		this.last_github_sync = "Never";
 
 		var pusher = $pusher(client);		
 		var user_channel = pusher.subscribe('kevin-powell-pusher-channel');
@@ -70,20 +71,27 @@
 
 		this.github_issue_synced = function(data) {
 			appController.issues_synchronized = appController.issues_synchronized + 1;
-			console.log(appController.issues_synchronized);
-			console.log(appController.issues_to_be_synced);
 			if (appController.issues_synchronized == appController.issues_to_be_synced) {
 				appController.progress_bar_width = '100%';
 				// this.get("controllers.issuesIndex").send("githubSyncComplete");
 				appController.github_sync_complete = true;
 				appController.github_syncing = false;
 				$rootScope.$broadcast("github_sync_complete");
+				$http.put('/complete_github_sync_for_user/' + current_user_id + ".json").success(function(){
+					appController.get_last_github_sync();
+				});
 			}
 			else {
 				var width = ( appController.issues_synchronized / appController.issues_to_be_synced ) * 100;
 				appController.progress_bar_width = width + '%';
 				appController.github_syncing = true;
 			}
+		}
+
+		this.get_last_github_sync = function(){
+			$http.get('/last_github_sync_for_user/' + current_user_id + ".json").success(function(data){
+				appController.last_github_sync = data.updated_at;
+			});
 		}
 
 		this.sync_github_issues = function(){
@@ -94,6 +102,7 @@
 			$http.put('/synchronize-github-issues-for-user/' + current_user_id);
 		}
 
+		this.get_last_github_sync();
 	}]);
 
 	app.controller("IssuesController", ['$http', '$filter', '$scope', '$rootScope', function($http, $filter, $scope, $rootScope){

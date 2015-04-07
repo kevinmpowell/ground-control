@@ -16,6 +16,8 @@ GroundControl::Application.routes.draw do
   end
 
   put 'synchronize-github-issues-for-user/:user_id', :to => 'github_service#synchronize_github_issues'
+  put 'complete_github_sync_for_user/:user_id', :to => 'github_syncs#complete_github_sync_for_user'
+  get 'last_github_sync_for_user/:user_id', :to => 'github_syncs#last_github_sync_for_user', :format => :json
   put 'update-issue-sort-order', :to => 'issues#update_issue_sort_order', :format => :json
 
   # The priority is based upon order of creation: first created -> highest priority.

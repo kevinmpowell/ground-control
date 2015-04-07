@@ -34,6 +34,7 @@
 					<div class="github-sync-wrapper">
 						<div class="github-sync-progress progress">
 							<div ng-style="{'width':app.progress_bar_width}" class="github-sync-progress-inner progress-bar" ng-class="{'progress-bar-striped':app.github_syncing, 'active': app.github_syncing, 'complete': app.github_sync_complete}"></div>
+							<small class="last-github-sync">Updated <span am-time-ago="app.last_github_sync"></span></small>
 						</div>
 						<button ng-click="app.sync_github_issues()" class="btn btn-default github-sync-btn"><span class="sync-icon fa fa-refresh" ng-class="{'fa-spin': app.github_syncing}"></span>Sync Now</button>
 					</div>

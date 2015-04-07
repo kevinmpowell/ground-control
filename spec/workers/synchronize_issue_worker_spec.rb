@@ -76,4 +76,18 @@ describe SynchronizeIssueWorker do
 		expect(@archived_issue.state).to eq("open")
 		expect(@archived_issue.archived).to eq(false)
 	end
+
+	it "should create a GithubSync record and set it to false" do
+		expect{
+			SynchronizeIssueWorker.perform_async(@issue_url, @current_user.id)
+		}.to change(GithubSync, :count).by(1)
+	end
+
+	it "should not create a GithubSync record if an incomplete GithubSync record already exists for this user" do
+		GithubSync.create({complete: false, user_id: @current_user.id})
+
+		expect{
+			SynchronizeIssueWorker.perform_async(@issue_url, @current_user.id)
+		}.to change(GithubSync, :count).by(0)
+	end
 end

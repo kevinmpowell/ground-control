@@ -157,9 +157,31 @@ label {
   }
 
   &.complete:after {
-    @include transition(all 0.4s 0.4s);
+    @include transition(top 0.4s 0.4s, opacity 0.4s 0.4s, left 0.4s 2s);
     top:0;
     opacity:1;
+    left: 100%;
+  }
+}
+
+.last-github-sync {
+  opacity: 0;
+  color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 100%;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: center;
+  padding-right: 20px;
+  z-index: 10;
+
+  .complete + & {
+    @include transition(all 0.4s 2s);
+    opacity: 1;
+    top: 0;
   }
 }
 
@@ -318,6 +340,11 @@ label {
   .closed & {
     display:inline;
   }
+}
+
+.archive-btn {
+  display: block;
+  margin-top: 20px;
 }
 
 .issue-labels {
