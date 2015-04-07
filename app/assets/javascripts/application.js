@@ -95,6 +95,7 @@
 				var width = ( appController.issues_synchronized / appController.issues_to_be_synced ) * 100;
 				appController.progress_bar_width = width + '%';
 				appController.github_syncing = true;
+				appController.github_sync_complete = false;
 			}
 		}
 
@@ -104,17 +105,21 @@
 			});
 		}
 
-		this.sync_github_issues = function(){
+		this.initiate_manual_github_sync = function(){
 			appController.reset_auto_github_sync();
+			appController.sync_github_issues();
+		}
+
+		this.sync_github_issues = function(){
+			this.github_sync_complete = false;
 			this.progress_bar_width = '0';
 			this.github_syncing = true;
-			this.github_sync_complete = false;
 
 			$http.put('/synchronize-github-issues-for-user/' + current_user_id);
 		}
 
 		this.get_last_github_sync();
-		this.sync_github_issues();
+		this.initiate_manual_github_sync();
 	}]);
 
 	app.controller("IssuesController", ['$http', '$filter', '$scope', '$rootScope', function($http, $filter, $scope, $rootScope){
