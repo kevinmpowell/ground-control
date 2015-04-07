@@ -3,9 +3,9 @@
 	<div class="client-filter-wrapper">
 		<h5 class="client-filter-label">Filter by client:</h5>
 		<ul class="client-filter" ng-controller="ClientReposController as clientsCtrl">
-			<li><a href="#" class="client-filter-link" ng-click="issuesCtrl.filter_issues_by_client('all')">All</a></li>
+			<li><a href="#" class="client-filter-link" ng-class="{'active': issuesCtrl.client_active('all')}" ng-click="issuesCtrl.filter_issues_by_client('all')">All</a></li>
 			<li ng-repeat="client in clientsCtrl.client_names">
-				<a href="#" class="client-filter-link" ng-click="issuesCtrl.filter_issues_by_client(client.client_name)">{{client.client_name}}</a>
+				<a href="#" class="client-filter-link" ng-class="{'active': issuesCtrl.client_active(client.client_name)}" ng-click="issuesCtrl.filter_issues_by_client(client.client_name)">{{client.client_name}}</a>
 			</li>    		
 		</ul>
 	</div>

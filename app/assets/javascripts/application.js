@@ -76,9 +76,7 @@
 				$interval.cancel(github_sync_check);
 			}
 
-			github_sync_check = $interval(function(){
-				appController.sync_github_issues();
-			}, 300000)
+			github_sync_check = $interval(appController.sync_github_issues, 300000);
 		}
 
 		this.github_issue_synced = function(data) {
@@ -107,13 +105,12 @@
 		}
 
 		this.sync_github_issues = function(){
+			appController.reset_auto_github_sync();
 			this.progress_bar_width = '0';
 			this.github_syncing = true;
 			this.github_sync_complete = false;
 
-			$http.put('/synchronize-github-issues-for-user/' + current_user_id).success(function(){
-				appController.reset_auto_github_sync();
-			});
+			$http.put('/synchronize-github-issues-for-user/' + current_user_id);
 		}
 
 		this.get_last_github_sync();
