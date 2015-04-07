@@ -43,8 +43,9 @@
 	    };
 	});
 
-	app.controller("AppController", ['$http', '$pusher', '$rootScope', function($http, $pusher, $rootScope){
+	app.controller("AppController", ['$http', '$pusher', '$rootScope', '$interval', function($http, $pusher, $rootScope, $interval){
 		var appController = this;
+		var github_sync_check;
 		this.name = "Ground Control";
 		this.issues_to_be_synced = 0;
 		this.issues_synchronized = 0;
@@ -68,6 +69,17 @@
 		user_channel.bind('github_issue_synced', function(data){
 			appController.github_issue_synced(data);
 		});
+
+
+		this.reset_auto_github_sync = function() {
+			if (angular.isDefined(github_sync_check)) {
+				$interval.cancel(github_sync_check);
+			}
+
+			github_sync_check = $interval(function(){
+				appController.sync_github_issues();
+			}, 300000)
+		}
 
 		this.github_issue_synced = function(data) {
 			appController.issues_synchronized = appController.issues_synchronized + 1;
@@ -99,10 +111,13 @@
 			this.github_syncing = true;
 			this.github_sync_complete = false;
 
-			$http.put('/synchronize-github-issues-for-user/' + current_user_id);
+			$http.put('/synchronize-github-issues-for-user/' + current_user_id).success(function(){
+				appController.reset_auto_github_sync();
+			});
 		}
 
 		this.get_last_github_sync();
+		this.sync_github_issues();
 	}]);
 
 	app.controller("IssuesController", ['$http', '$filter', '$scope', '$rootScope', function($http, $filter, $scope, $rootScope){
