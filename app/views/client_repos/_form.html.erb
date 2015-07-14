@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :client_name %><br>
-    <%= f.select :client_name, options_for_select([["Yahoo", "yahoo"], ["Marriott", "marriott"], ["EightShapes", "eightshapes"]]), prompt: "Select a Client", class: "form-control" %>
+  <div class="form-group">
+    <%= f.label :client_name, class: "control-label" %><br>
+    <%= f.select :client_name, options_for_select(ClientRepo.all.map{|cr| [cr.client_name.titleize, cr.client_name.parameterize]}.uniq!.sort), prompt: "Select a Client", class: "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :repo_name %><br>
+  <div class="form-group">
+    <%= f.label :repo_name, class: "control-label" %><br>
     <%= f.select :repo_name, options_for_select(@github_repositories_select_options), prompt: "Select a repository", class: "form-control"  %>
   </div>
   <div class="actions">
