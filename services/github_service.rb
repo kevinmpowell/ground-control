@@ -3,7 +3,7 @@ class GithubService
       user = User.find(user_id)
       github = Github.new oauth_token: user.auth_token
       #Todo make these orgs part of the user profile and iterate over them to collect the issues
-      user_orgs = ['eightshapes', 'marriottdigital']
+      user_orgs = ENV['GITHUB_REPO_ORGANIZATIONS'].split(',')
       issues = Issue.where({user_id: user_id, archived: false}).all #Get all issues in the DB that are not already archived
 
       user_orgs.each do |org_name|
