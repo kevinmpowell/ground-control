@@ -6,7 +6,7 @@ describe GithubService do
 	end
 
 	it "synchronize github issues for a given user" do
-		expect(SynchronizeIssueWorker).to receive(:perform_async).exactly(2).times
+		expect(SynchronizeIssueWorker).to receive(:perform_async).once
 		GithubService.synchronize_issues_for_user(@user.id)
 	end
 
